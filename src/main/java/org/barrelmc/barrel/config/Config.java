@@ -33,4 +33,7 @@ public class Config {
     @Setter
     @Getter
     public String auth;
+    @Setter
+    @Getter
+    public Integer maxplayers
 }
