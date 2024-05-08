@@ -3,7 +3,7 @@ bindAddress: "0.0.0.0"
 port: 25565
 motd: "Barrel Proxy\nConnect to Bedrock Server"
 # max players in proxy
-max-players: 10
+maxplayers: 10
 # Downstream server (bedrock)
 bedrockAddress: "play.venitymc.com"
 bedrockPort: 19132
