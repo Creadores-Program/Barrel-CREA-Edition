@@ -158,13 +158,14 @@ public class ProxyServer {
             }
         });
         server.setGlobalFlag(MinecraftConstants.SERVER_COMPRESSION_THRESHOLD, 100);
+        String StopMSG = this.config.getShutdownMessage();
         server.addListener(new ServerAdapter() {
             @Override
             public void serverClosed(ServerClosedEvent event) {
                 for (var entry : ProxyServer.getInstance().getBedrockPlayers().entrySet()) {
                     Player player = entry.getValue();
 
-                    player.disconnect("Proxy closed");
+                    player.disconnect(StopMSG);
                 }
                 System.out.println("Server closed.");
             }
