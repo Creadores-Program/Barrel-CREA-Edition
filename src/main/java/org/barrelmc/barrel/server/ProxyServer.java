@@ -92,7 +92,7 @@ public class ProxyServer {
         loadDefaultSkin();
         startServer();
     }
-    public getLogger(){
+    public Logger getLogger(){
         return this.logger;
     }
 
