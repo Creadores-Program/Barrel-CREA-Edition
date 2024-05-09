@@ -17,3 +17,5 @@
 
 - [TunnelMC](https://github.com/THEREALWWEFAN231/TunnelMC)
 - [EZ4H](https://github.com/Project-EZ4H/EZ4H)
+- [Cloudburst Protocol](https://github.com/CloudburstMC/Protocol)
+- [MCProtocolLib](https://github.com/GeyserMC/MCProtocolLib)
