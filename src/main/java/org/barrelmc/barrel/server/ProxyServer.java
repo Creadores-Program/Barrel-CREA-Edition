@@ -77,8 +77,7 @@ public class ProxyServer {
     @Getter
     private NbtBlockDefinitionRegistry blockDefinitions;
     
-    @Getter
-    private Logger logger;
+    public Logger logger;
 
     public ProxyServer(String dataPath) {
         instance = this;
