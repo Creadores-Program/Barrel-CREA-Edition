@@ -1,7 +1,7 @@
 package org.barrelmc.barrel.utils;
 import org.barrelmc.barrel.utils.nukkit.TextFormat;
 public class Logger{
-  private String prefix;
+  public String prefix;
   Logger(String prefix){
     if(prefix != null){
     this.prefix = prefix;
