@@ -19,3 +19,5 @@
 - [EZ4H](https://github.com/Project-EZ4H/EZ4H)
 - [Cloudburst Protocol](https://github.com/CloudburstMC/Protocol)
 - [MCProtocolLib](https://github.com/GeyserMC/MCProtocolLib)
+- [Barrel By DavyCraft648](https://github.com/DavyCraft648/Barrel)
+- [Barrel By BarrelMC](https://github.com/BarrelMC/Barrel)
