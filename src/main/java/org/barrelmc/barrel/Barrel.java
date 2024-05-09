@@ -13,15 +13,14 @@ package org.barrelmc.barrel;
 
 import org.barrelmc.barrel.network.converter.BlockConverter;
 import org.barrelmc.barrel.server.ProxyServer;
-import org.barrelmc.barrel.utils.Logger;
 
 public class Barrel {
 
     public static String DATA_PATH = System.getProperty("user.dir") + "/";
 
     public static void main(String[] args) {
-        System.out.println("Starting Barrel Proxy software CREA Edition");
+        System.out.println("Starting Barrel Proxy CREA Edition software");
         BlockConverter.init();
-        new ProxyServer(DATA_PATH, new Logger("§6BarrelMC"));
+        new ProxyServer(DATA_PATH);
     }
 }
