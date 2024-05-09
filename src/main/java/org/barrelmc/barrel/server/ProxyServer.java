@@ -79,9 +79,9 @@ public class ProxyServer {
 
     private Logger logger;
 
-    public ProxyServer(String dataPath, Logger logger) {
+    public ProxyServer(String dataPath) {
         instance = this;
-        this.logger = logger;
+        this.logger = new Logger("§6BarrelMC");
         this.dataPath = Paths.get(dataPath);
         if (!initConfig()) {
             this.getLogger().emergency("Config file not found! Terminating...");
