@@ -2,7 +2,7 @@ package org.barrelmc.barrel.utils;
 import org.barrelmc.barrel.utils.nukkit.TextFormat;
 public class Logger{
   public String prefix;
-  Logger(String prefix){
+  public Logger(String prefix){
     this.prefix = prefix;
   }
   public Logger getLogger(){
