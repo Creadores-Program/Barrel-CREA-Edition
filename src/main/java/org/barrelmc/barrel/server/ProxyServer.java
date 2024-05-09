@@ -245,6 +245,9 @@ public class ProxyServer {
     }
     public byte[] getIcon(){
         byte[] Icon;
+        if(this.config.getIcon() == null || this.config.getIcon().trim() == ""){
+            return null;
+        }
         if(this.config.getIcon().startsWith("https://") || this.config.getIcon().startsWith("http://")){
             Icon = this.getIconUrlToBytes(this.config.getIcon());
         }else{
