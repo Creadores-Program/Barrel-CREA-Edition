@@ -6,6 +6,8 @@ motd: "Barrel Proxy\nConnect to Bedrock Server"
 maxplayers: 10
 # proxy icon
 icon: "https://raw.githubusercontent.com/BarrelMC/Assets/master/logo/barrel.png"
+# Message when the proxy is closed
+shutdownMessage: "Proxy Closed"
 
 # Downstream server (bedrock)
 bedrockAddress: "play.venitymc.com"
