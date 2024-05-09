@@ -39,6 +39,7 @@ import org.cloudburstmc.nbt.NbtUtils;
 import org.cloudburstmc.protocol.bedrock.codec.BedrockCodec;
 import org.cloudburstmc.protocol.bedrock.codec.v662.Bedrock_v662;
 import org.yaml.snakeyaml.Yaml;
+import org.barrelmc.barrel.utils.Logger;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -76,17 +77,23 @@ public class ProxyServer {
     @Getter
     private NbtBlockDefinitionRegistry blockDefinitions;
 
-    public ProxyServer(String dataPath) {
+    private Logger logger;
+
+    public ProxyServer(String dataPath, Logger logger) {
         instance = this;
+        this.logger = logger;
         this.dataPath = Paths.get(dataPath);
         if (!initConfig()) {
-            System.out.println("Config file not found! Terminating...");
+            this.getLogger().emergency("Config file not found! Terminating...");
             System.exit(0);
         }
         loadRegistryCodec();
         loadBlockDefinitions();
         loadDefaultSkin();
         startServer();
+    }
+    public getLogger(){
+        return this.logger;
     }
 
     private boolean initConfig() {
@@ -145,14 +152,14 @@ public class ProxyServer {
 
     private void startServer() {
         SessionService sessionService = new SessionService();
-
+        Logger consol = this.getLogger();
         Server server = new TcpServer(this.config.getBindAddress(), this.config.getPort(), MinecraftProtocol::new);
         server.setGlobalFlag(MinecraftConstants.SESSION_SERVICE_KEY, sessionService);
         server.setGlobalFlag(MinecraftConstants.VERIFY_USERS_KEY, false);
         server.setGlobalFlag(MinecraftConstants.SERVER_INFO_BUILDER_KEY, (ServerInfoBuilder) session -> new ServerStatusInfo(new VersionInfo(MinecraftCodec.CODEC.getMinecraftVersion(), MinecraftCodec.CODEC.getProtocolVersion()), new PlayerInfo(this.config.getMaxplayers(), 0, new ArrayList<>()), Component.text(this.config.getMotd()), this.getIcon(), false));
         server.setGlobalFlag(MinecraftConstants.SERVER_LOGIN_HANDLER_KEY, (ServerLoginHandler) session -> {
             GameProfile profile = session.getFlag(MinecraftConstants.PROFILE_KEY);
-            System.out.println(profile.getName() + " logged in");
+            consol.info(profile.getName() + " logged in");
             if (!AuthManager.getInstance().getLoginPlayers().containsKey(profile.getName()) && this.getPlayerByName(profile.getName()) == null) {
                 session.addListener(new AuthServer(session, profile.getName()));
             }
@@ -167,7 +174,7 @@ public class ProxyServer {
 
                     player.disconnect(StopMSG);
                 }
-                System.out.println("Server closed.");
+                consol.info("Server closed.");
             }
 
             @Override
@@ -192,13 +199,13 @@ public class ProxyServer {
                     AuthManager.getInstance().getTimers().get(username).cancel();
                     AuthManager.getInstance().getTimers().remove(username);
                 }
-                System.out.println(username + " logged out");
+                consol.info(username + " logged out");
             }
         });
 
-        System.out.println("Binding to " + this.config.getBindAddress() + " on port " + this.config.getPort());
+        consol.info("Binding to " + this.config.getBindAddress() + " on port " + this.config.getPort());
         server.bind();
-        System.out.println("BarrelProxy is running on [" + this.config.getBindAddress() + "::" + this.config.getPort() + "]");
+        consol.info("BarrelProxy §aCREA §bEdition§r is running on [" + this.config.getBindAddress() + "::" + this.config.getPort() + "]");
     }
 
     public Player getPlayerByName(String username) {
@@ -222,7 +229,7 @@ public class ProxyServer {
         return Files.readAllBytes(IconF);
         }catch(Exception e){
             e.printStackTrace();
-            System.out.println("No load Icon! Use default Icon...");
+            this.getLogger().warn("No load Icon! Use default Icon...");
             return null;
         }
     }
@@ -240,7 +247,7 @@ public class ProxyServer {
         }
         }catch(Exception e){
             e.printStackTrace();
-            System.out.println("No load Icon! Use default Icon...");
+            this.getLogger().warn("No load Icon! Use default Icon...");
             return null;
         }
     }
