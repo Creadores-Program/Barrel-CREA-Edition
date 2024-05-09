@@ -228,7 +228,7 @@ public class ProxyServer {
     private byte[] getIconUrlToBytes(String url){
         try{
         URL urlIcon = new URL(url);
-        try (InputStream inputStream = url.openStream();
+        try (InputStream inputStream = urlIcon.openStream();
              ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
             byte[] buffer = new byte[1024];
             int bytesRead;
