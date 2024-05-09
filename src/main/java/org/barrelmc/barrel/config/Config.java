@@ -41,4 +41,8 @@ public class Config {
     @Setter
     @Getter
     public String icon;
+    
+    @Setter
+    @Getter
+    public String shutdownMessage;
 }
