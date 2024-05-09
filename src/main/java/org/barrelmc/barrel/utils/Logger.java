@@ -3,11 +3,7 @@ import org.barrelmc.barrel.utils.nukkit.TextFormat;
 public class Logger{
   public String prefix;
   Logger(String prefix){
-    if(prefix != null){
     this.prefix = prefix;
-    }else{
-      this.prefix = "§6BarrelMC";
-    }
   }
   public Logger getLogger(){
     return this;
