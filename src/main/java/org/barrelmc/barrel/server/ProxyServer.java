@@ -156,7 +156,7 @@ public class ProxyServer {
         Logger consol = this.getLogger();
         Server server = new TcpServer(this.config.getBindAddress(), this.config.getPort(), MinecraftProtocol::new);
         server.setGlobalFlag(MinecraftConstants.SESSION_SERVICE_KEY, sessionService);
-        server.setGlobalFlag(MinecraftConstants.VERIFY_USERS_KEY, false);
+        server.setGlobalFlag(MinecraftConstants.VERIFY_USERS_KEY, this.config.getPremiumPlayerJava());
         server.setGlobalFlag(MinecraftConstants.SERVER_INFO_BUILDER_KEY, (ServerInfoBuilder) session -> new ServerStatusInfo(new VersionInfo(MinecraftCodec.CODEC.getMinecraftVersion(), MinecraftCodec.CODEC.getProtocolVersion()), new PlayerInfo(this.config.getMaxplayers(), 0, new ArrayList<>()), Component.text(this.config.getMotd()), this.getIcon(), false));
         server.setGlobalFlag(MinecraftConstants.SERVER_LOGIN_HANDLER_KEY, (ServerLoginHandler) session -> {
             GameProfile profile = session.getFlag(MinecraftConstants.PROFILE_KEY);
