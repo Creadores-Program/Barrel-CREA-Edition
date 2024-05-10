@@ -1,4 +1,4 @@
-<h1><b>Barrel</b><img src="https://github.com/BarrelMC/Assets/blob/master/logo/barrel.png" height="64" width="64" align="left" alt=""></h1><br>
+<h1><b>Barrel CREA Edition</b><img src="https://raw.githubusercontent.com/Trollhunters501/Barrel-CREA-Edition/main/_fae2ed51-1be3-4750-b95b-de9fd286b4df.jpeg" height="64" width="64" align="left" alt=""></h1><br>
 
 <b>A proxy to connect to Minecraft: Bedrock Edition servers with Minecraft: Java Edition.</b><br>
 
