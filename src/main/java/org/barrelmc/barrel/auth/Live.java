@@ -64,7 +64,7 @@ public class Live {
                     AuthManager.getInstance().getTimers().remove(username);
 
                     session.send(new ClientboundSystemChatPacket(Component.text("§eSuccessfully authenticated with Xbox Live. Please rejoin!"), false));
-                    Log.error(username + " authenticated");
+                    Log.info(username + " authenticated");
 
                     timer.cancel();
                 } catch (Exception ignored) {
