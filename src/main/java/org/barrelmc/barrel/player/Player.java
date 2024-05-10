@@ -421,7 +421,7 @@ public class Player extends Vector3 {
         }
         this.javaSession.disconnect(reason);
         ProxyServer.getInstance().removeBedrockPlayer(javaUsername);
-        System.out.println(javaUsername + " disconnected: " + reason);
+        ProxyServer.getInstance().getLogger().info(javaUsername + " disconnected: " + reason);
     }
 
     @Override
