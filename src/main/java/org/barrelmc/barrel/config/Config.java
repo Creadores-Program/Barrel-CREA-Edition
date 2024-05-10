@@ -45,4 +45,8 @@ public class Config {
     @Setter
     @Getter
     public String shutdownMessage;
+    
+    @Setter
+    @Getter
+    public Boolean premiumPlayerJava;
 }
