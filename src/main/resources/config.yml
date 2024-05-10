@@ -12,7 +12,7 @@ shutdownMessage: "Proxy Closed"
 premiumPlayerJava: false
 
 # Downstream server (bedrock)
-bedrockAddress: "play.venitymc.com"
-bedrockPort: 19132
+bedrockAddress: "join.servermc.xyz"
+bedrockPort: 10171
 # Use xbox login? (offline|online)
 auth: online
