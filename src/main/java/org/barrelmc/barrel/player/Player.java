@@ -351,7 +351,7 @@ public class Player extends Vector3 {
         skinData.put("CurrentInputMode", 1);
         skinData.put("DefaultInputMode", 1);
         skinData.put("DeviceId", java.util.UUID.randomUUID().toString());
-        skinData.put("DeviceModel", "Barrel");
+        skinData.put("DeviceModel", "Barrel CREA Edition");
         skinData.put("DeviceOS", 7);
         skinData.put("GameVersion", ProxyServer.getInstance().getBedrockPacketCodec().getMinecraftVersion());
         skinData.put("GuiScale", 0);
