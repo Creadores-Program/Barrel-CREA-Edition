@@ -9,7 +9,7 @@ import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
-
+import org.barrelmc.barrel.utils.Logger;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -21,8 +21,10 @@ public class Live {
 
     private static final String LIVE_CONNECT_URL = "https://login.live.com/oauth20_connect.srf";
     private static final String LIVE_TOKEN_URL = "https://login.live.com/oauth20_token.srf";
-
+    private Logger logger;
     public Timer requestLiveToken(Session session, String username) throws Exception {
+        this.logger = new Logger("Live Manager");
+        Logger Log = this.logger;
         JSONObject d = AuthManager.getInstance().getXboxLive().startDeviceAuth();
 
         Component linkComponent = Component.text(d.getString("verification_uri"))
@@ -52,7 +54,7 @@ public class Live {
                     JSONObject r = AuthManager.getInstance().getXboxLive().pollDeviceAuth(d.getString("device_code"));
 
                     if (r.containsKey("error")) {
-                        System.out.println(r.getString("error_description"));
+                        Log.error(r.getString("error_description"));
                         return;
                     }
 
