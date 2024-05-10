@@ -40,6 +40,7 @@ import org.cloudburstmc.protocol.bedrock.codec.BedrockCodec;
 import org.cloudburstmc.protocol.bedrock.codec.v662.Bedrock_v662;
 import org.yaml.snakeyaml.Yaml;
 import org.barrelmc.barrel.utils.Logger;
+import org.barrelmc.barrel.utils.nukkit.TextFormat;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -81,11 +82,11 @@ public class ProxyServer {
 
     public ProxyServer(String dataPath) {
         instance = this;
-        this.logger = new Logger("§6BarrelMC");
+        this.logger = new Logger(TextFormat.GOLD.getAnsiCode()+"BarrelMC");
         this.dataPath = Paths.get(dataPath);
         if (!initConfig()) {
             this.getLogger().emergency("Config file not found! Terminating...");
-            System.exit(0);
+            System.exit(1);
         }
         loadRegistryCodec();
         loadBlockDefinitions();
