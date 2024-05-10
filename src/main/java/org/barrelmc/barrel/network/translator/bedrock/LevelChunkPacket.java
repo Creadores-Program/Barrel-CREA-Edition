@@ -16,6 +16,7 @@ import org.barrelmc.barrel.player.Player;
 import org.barrelmc.barrel.utils.Utils;
 import org.barrelmc.barrel.utils.nukkit.BitArray;
 import org.barrelmc.barrel.utils.nukkit.BitArrayVersion;
+import org.barrelmc.barrel.utils.Logger;
 import org.cloudburstmc.nbt.NBTInputStream;
 import org.cloudburstmc.nbt.NbtMap;
 import org.cloudburstmc.nbt.NbtMapBuilder;
