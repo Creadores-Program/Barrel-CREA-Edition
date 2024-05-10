@@ -47,7 +47,7 @@ public class Logger{
     er.printStackTrace();
   }
   public void warning(String message){
-    System.out.println("["+TextFormat.YELLOW.getAnsiCode()+"WARN"+TextFormat.RESET.getAnsiCode()+"] ["+ this.prefix +TextFormat.RESET.getAnsiCode()+"] "+message));
+    System.out.println("["+TextFormat.YELLOW.getAnsiCode()+"WARN"+TextFormat.RESET.getAnsiCode()+"] ["+ this.prefix +TextFormat.RESET.getAnsiCode()+"] "+message);
   }
   public void warning(String message, Throwable er){
     System.out.println("["+TextFormat.YELLOW.getAnsiCode()+"WARN"+TextFormat.RESET.getAnsiCode()+"] ["+ this.prefix +TextFormat.RESET.getAnsiCode()+"] "+message);
