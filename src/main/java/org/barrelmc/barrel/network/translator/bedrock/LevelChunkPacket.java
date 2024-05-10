@@ -130,8 +130,8 @@ public class LevelChunkPacket implements BedrockPacketTranslator {
                     try {
                         NbtMapBuilder map = ((NbtMap) nbtStream.readTag()).toBuilder();
                         map.replace("name", "minecraft:" + map.get("name").toString());
-
-                        System.out.println(map.build().toString());
+                        Logger logger = new Logger("Chunk Manager");
+                        logger.info(map.build().toString());
                         //sectionPalette[i] = BlockPaletteTranslator.getBedrockBlockId(BlockPaletteTranslator.bedrockStateFromNBTMap(map.build()));
                     } catch (IOException e) {
                         e.printStackTrace();
