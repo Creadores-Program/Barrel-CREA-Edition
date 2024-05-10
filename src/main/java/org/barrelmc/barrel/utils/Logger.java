@@ -40,7 +40,7 @@ public class Logger{
     er.printStackTrace();
   }
   public void error(String message){
-    System.out.printIn("["+TextFormat.RED.getAnsiCode()+"ERROR"+TextFormat.RESET.getAnsiCode()+"] ["+ this.prefix +TextFormat.RESET.getAnsiCode()+"] "+message);
+    System.out.println("["+TextFormat.RED.getAnsiCode()+"ERROR"+TextFormat.RESET.getAnsiCode()+"] ["+ this.prefix +TextFormat.RESET.getAnsiCode()+"] "+message);
   }
   public void error(String message, Throwable er){
     System.out.println("["+TextFormat.RED.getAnsiCode()+"ERROR"+TextFormat.RESET.getAnsiCode()+"] ["+ this.prefix +TextFormat.RESET.getAnsiCode()+"] "+message);
