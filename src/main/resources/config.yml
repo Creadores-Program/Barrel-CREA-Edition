@@ -8,6 +8,8 @@ maxplayers: 10
 icon: "https://raw.githubusercontent.com/BarrelMC/Assets/master/logo/barrel.png"
 # Message when the proxy is closed
 shutdownMessage: "Proxy Closed"
+# Is Player Java Premium
+premiumPlayerJava: false
 
 # Downstream server (bedrock)
 bedrockAddress: "play.venitymc.com"
