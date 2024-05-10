@@ -6,7 +6,7 @@
 
 - Java 11
 - Minecraft: Java Edition v1.20.1
-- Bedrock Edition server v1.20.70
+- Bedrock Edition server v1.20.70 Or [NukkitPM1E](https://github.com/PetteriM1/NukkitPetteriM1Edition) Or a multiversion server
 
 ## Need implemented
 
