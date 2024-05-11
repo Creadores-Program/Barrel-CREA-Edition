@@ -20,5 +20,5 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: Barrel
-          path: target/Barrel-1.0.0-SNAPSHOT.jar
+          name: Barrel CREA Edition
+          path: target/Barrel-CREA-Edition-1.0.0-SNAPSHOT.jar
