@@ -14,6 +14,9 @@
 - IU(Forms)
 - And More...
 
+## Installation
+Paste the .zip file of the latest version into the server's home directory and then unzip the file and edit the config.yml file to put the correct information for your server and your preferences!
+
 ## Credits
 
 - [TunnelMC](https://github.com/THEREALWWEFAN231/TunnelMC)
