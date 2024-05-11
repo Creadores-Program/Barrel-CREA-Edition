@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.barrelmc.barrel</groupId>
-    <artifactId>Barrel</artifactId>
+    <artifactId>Barrel-CREA-Edition</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
     <repositories>
