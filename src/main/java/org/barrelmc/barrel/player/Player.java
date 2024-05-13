@@ -145,7 +145,7 @@ public class Player extends Vector3 {
     private int hotbarSlot = 0;
 
     @Getter
-    private List<String, Integer> formsList = new ArrayList<>();
+    private List<Integer> formsList = new ArrayList<>();
 
     public Player(ServerboundHelloPacket loginPacket, Session javaSession) {
         this.packetTranslatorManager = new PacketTranslatorManager(this);
