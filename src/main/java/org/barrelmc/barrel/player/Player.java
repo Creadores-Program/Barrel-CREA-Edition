@@ -53,6 +53,8 @@ import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Player extends Vector3 {
 
@@ -141,6 +143,9 @@ public class Player extends Vector3 {
     @Getter
     @Setter
     private int hotbarSlot = 0;
+
+    @Getter
+    private List<String, Integer> formsList = new ArrayList<>();
 
     public Player(ServerboundHelloPacket loginPacket, Session javaSession) {
         this.packetTranslatorManager = new PacketTranslatorManager(this);
@@ -438,6 +443,18 @@ public class Player extends Vector3 {
             this.javaSession.send(new ClientboundSetChunkCacheCenterPacket((int) x >> 4, (int) z >> 4));
         }
         super.setPosition(x, y, z);
+    }
+    public boolean isForm(int IDForm){
+        if(this.formsList.contains(IDForm)){
+            this.formsList.remove(IDForm);
+            return true;
+        }
+        return false;
+    }
+    public void setForm(int IDForm){
+        if(!this.formsList.contains(IDForm)){
+            this.formsList.add(IDForm);
+        }
     }
 }
 
