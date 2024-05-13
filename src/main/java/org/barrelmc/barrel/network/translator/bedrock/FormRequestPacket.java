@@ -10,6 +10,7 @@ public class FormRequestPacket implements BedrockPacketTranslator {
   @Override
   public void translate(BedrockPacket pk, Player player) {
     org.cloudburstmc.protocol.bedrock.packet.ModalFormRequestPacket packet = (org.cloudburstmc.protocol.bedrock.packet.ModalFormRequestPacket) pk;
+    player.setForm(packet.getFormId());
     player.getJavaSession().send(new ClientboundOpenScreenPacket(packet.getFormId(), ContainerType.GENERIC_9X6, packet.getFormData()));
   }
 }
