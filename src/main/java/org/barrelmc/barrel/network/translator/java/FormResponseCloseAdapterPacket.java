@@ -11,7 +11,7 @@ public class FormResponseCloseAdapterPacket implements JavaPacketTranslator{
     if(player.isForm(closeformpk.getContainerId())){
       ModalFormResponsePacket formResPacket = new ModalFormResponsePacket();
       formResPacket.setFormId(closeformpk.getContainerId());
-      formResPacket.setFormData("{ canceled: true, selection: null }");
+      formResPacket.setFormData("{ \"canceled\": true, \"selection\": null }");
       player.getBedrockClientSession().sendPacket(formResPacket);
     }
   }
