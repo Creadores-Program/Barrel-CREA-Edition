@@ -5,7 +5,8 @@ import com.github.steveice10.mc.protocol.data.game.PlayerListEntry;
 import com.github.steveice10.mc.protocol.data.game.PlayerListEntryAction;
 import com.github.steveice10.mc.protocol.data.game.entity.player.GameMode;
 import com.github.steveice10.mc.protocol.packet.ingame.clientbound.ClientboundPlayerInfoUpdatePacket;
-import com.github.steveice10.mc.protocol.packet.ingame.clientbound.entity.spawn.ClientboundAddPlayerPacket;
+import com.github.steveice10.mc.protocol.packet.ingame.clientbound.entity.spawn.ClientboundAddEntityPacket;
+com.github.steveice10.mc.protocol.data.game.entity.type.EntityType;
 import net.kyori.adventure.text.Component;
 import org.barrelmc.barrel.network.translator.interfaces.BedrockPacketTranslator;
 import org.barrelmc.barrel.player.Player;
@@ -29,6 +30,6 @@ public class AddPlayerPacket implements BedrockPacketTranslator {
         GameProfile gameProfile = new GameProfile(packet.getUuid(), Utils.lengthCutter(packet.getUsername(), 16));
 
         player.getJavaSession().send(new ClientboundPlayerInfoUpdatePacket(EnumSet.of(PlayerListEntryAction.ADD_PLAYER), new PlayerListEntry[]{new PlayerListEntry(packet.getUuid(), gameProfile, true, 0, GameMode.SURVIVAL, Component.text(Utils.lengthCutter(packet.getMetadata().get(EntityDataTypes.NAME), 16)), UUID.randomUUID(), 0L, null, null)}));
-        player.getJavaSession().send(new ClientboundAddPlayerPacket((int) packet.getRuntimeEntityId(), packet.getUuid(), position.getX(), position.getY(), position.getZ(), rotation.getY(), rotation.getX()));
+        player.getJavaSession().send(new ClientboundAddEntityPacket((int) packet.getRuntimeEntityId(), packet.getUuid(), EntityType.PLAYER, position.getX(), position.getY(), position.getZ(), rotation.getY(), rotation.getX()));
     }
 }
