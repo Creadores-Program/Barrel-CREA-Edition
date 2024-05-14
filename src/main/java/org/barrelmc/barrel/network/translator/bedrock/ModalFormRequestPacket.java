@@ -6,7 +6,7 @@ import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket;
 import com.github.steveice10.mc.protocol.packet.ingame.clientbound.inventory.ClientboundOpenScreenPacket;
 import com.github.steveice10.mc.protocol.data.game.inventory.ContainerType;
 
-public class FormRequestPacket implements BedrockPacketTranslator {
+public class ModalFormRequestPacket implements BedrockPacketTranslator {
   @Override
   public void translate(BedrockPacket pk, Player player) {
     org.cloudburstmc.protocol.bedrock.packet.ModalFormRequestPacket packet = (org.cloudburstmc.protocol.bedrock.packet.ModalFormRequestPacket) pk;
