@@ -1,7 +1,7 @@
 package org.barrelmc.barrel.network.translator.java;
 
 import com.github.steveice10.mc.protocol.codec.MinecraftPacket;
-import com.github.steveice10.mc.protocol.packet.ingame.serverbound.ServerboundClientInformationPacket;
+import com.github.steveice10.mc.protocol.packet.common.serverbound.ServerboundClientInformationPacket;
 import org.barrelmc.barrel.network.translator.interfaces.JavaPacketTranslator;
 import org.barrelmc.barrel.player.Player;
 import org.cloudburstmc.protocol.bedrock.packet.RequestChunkRadiusPacket;
