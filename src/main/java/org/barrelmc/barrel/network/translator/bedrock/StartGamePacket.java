@@ -47,7 +47,7 @@ public class StartGamePacket implements BedrockPacketTranslator {
                 TranslatorUtils.translateGamemodeToJE(packet.getPlayerGameType()),
                 new String[]{"minecraft:overworld", "minecraft:the_nether", "minecraft:the_end"}, ProxyServer.getInstance().getRegistryCodec(),
                 "minecraft:overworld", "minecraft:overworld", 100,
-                10, 16, 16, false, true, false, false, null, 0
+                ProxyServer.getInstance().getConfig().getMaxplayers(), 16, 16, false, true, false, false, null, 0
         );
 
         player.getJavaSession().send(serverJoinGamePacket);
