@@ -39,7 +39,7 @@ public class AuthServer extends SessionAdapter {
                 0, false, GameMode.ADVENTURE, GameMode.ADVENTURE,
                 new String[]{"minecraft:overworld"}, ProxyServer.getInstance().getRegistryCodec(),
                 "minecraft:overworld", "minecraft:overworld", 100,
-                10, 6, 6, false, true, false, false, null, 0
+                ProxyServer.getInstance().getConfig().getMaxplayers(), 6, 6, false, true, false, false, null, 0
         ));
 
         this.generateWorld(session);
