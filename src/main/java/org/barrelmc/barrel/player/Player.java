@@ -269,7 +269,7 @@ public class Player extends Vector3 {
     private void offlineLogin(ServerboundHelloPacket javaLoginPacket) {
         this.xuid = "";
         this.username = this.javaUsername = javaLoginPacket.getUsername();
-        this.UUID = java.util.UUID.randomUUID().toString();
+        this.UUID = javaLoginPacket.getProfileId().toString();
         Config config = ProxyServer.getInstance().getConfig();
         InetSocketAddress bedrockAddress = new InetSocketAddress(config.getBedrockAddress(), config.getBedrockPort());
         try {
