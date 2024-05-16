@@ -95,7 +95,6 @@ public class PacketTranslatorManager {
         bedrockTranslators.put(SetSpawnPositionPacket.class, new org.barrelmc.barrel.network.translator.bedrock.SetSpawnPositionPacket());
         bedrockTranslators.put(UpdateAbilitiesPacket.class, new org.barrelmc.barrel.network.translator.bedrock.UpdateAbilitiesPacket());
         bedrockTranslators.put(NetworkSettingsPacket.class, new org.barrelmc.barrel.network.translator.bedrock.NetworkSettingsPacket());
-        bedrockTranslators.put(ModalFormRequestPacket.class, new org.barrelmc.barrel.network.translator.bedrock.ModalFormRequestPacket());
         
         // Java packets
         javaTranslators.put(ServerboundChatPacket.class, new ChatPacket());
@@ -110,6 +109,5 @@ public class PacketTranslatorManager {
         javaTranslators.put(ServerboundPlayerActionPacket.class, new PlayerActionPacket());
         javaTranslators.put(ServerboundSeenAdvancementsPacket.class, new SeenAdvancementsPacket());
         javaTranslators.put(ServerboundPlayerAbilitiesPacket.class, new PlayerAbilitiesPacket());
-        javaTranslators.put(ClientboundContainerClosePacket.class, new FormResponseCloseAdapterPacket());
     }
 }
