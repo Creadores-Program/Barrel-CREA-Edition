@@ -16,7 +16,7 @@ public class SetTitlePacket implements BedrockPacketTranslator {
       switch(packet.getType()){
         case TITLE_JSON:
         case TITLE: {
-          player.getJavaSession().send(new ClientboundSetTitleTextPacket(Component.text(packet.getText()));
+          player.getJavaSession().send(new ClientboundSetTitleTextPacket(Component.text(packet.getText())));
           break;
         }
         case CLEAR: {
