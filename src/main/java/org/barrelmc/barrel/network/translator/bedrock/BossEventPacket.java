@@ -9,7 +9,7 @@ import com.github.steveice10.mc.protocol.data.game.BossBarAction;
 import com.github.steveice10.mc.protocol.data.game.BossBarColor;
 import com.github.steveice10.mc.protocol.data.game.BossBarDivision;
 import java.util.UUID;
-public class SetTitlePacket implements BedrockPacketTranslator {
+public class BossEventPacket implements BedrockPacketTranslator {
   @Override
     public void translate(BedrockPacket pk, Player player) {
       org.cloudburstmc.protocol.bedrock.packet.BossEventPacket packet = (org.cloudburstmc.protocol.bedrock.packet.BossEventPacket) pk;
