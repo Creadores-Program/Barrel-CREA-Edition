@@ -207,6 +207,7 @@ public class ProxyServer {
         consol.info("Binding to " + this.config.getBindAddress() + " on port " + this.config.getPort());
         server.bind();
         consol.info("BarrelProxy "+TextFormat.GREEN.getAnsiCode()+"CREA "+TextFormat.AQUA.getAnsiCode()+"Edition"+TextFormat.RESET.getAnsiCode()+" is running on [" + this.config.getBindAddress() + "::" + this.config.getPort() + "]");
+        consol.info("Done!");
     }
 
     public Player getPlayerByName(String username) {
