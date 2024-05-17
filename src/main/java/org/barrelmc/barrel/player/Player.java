@@ -53,8 +53,6 @@ import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.List;
-import java.util.ArrayList;
 
 public class Player extends Vector3 {
 
@@ -144,8 +142,6 @@ public class Player extends Vector3 {
     @Setter
     private int hotbarSlot = 0;
 
-    private List<java.util.UUID> bossbars = new ArrayList<>();
-
     public Player(ServerboundHelloPacket loginPacket, Session javaSession) {
         this.packetTranslatorManager = new PacketTranslatorManager(this);
         this.javaSession = javaSession;
@@ -168,9 +164,6 @@ public class Player extends Vector3 {
 
             playerInputExecutor.scheduleAtFixedRate(playerAuthInputThread, 0, 50, TimeUnit.MILLISECONDS);
         }
-    }
-    public void setBossBar(java.util.UUID id){
-        bossbars.add(id);
     }
 
     private void onlineLogin(ServerboundHelloPacket javaLoginPacket) {
