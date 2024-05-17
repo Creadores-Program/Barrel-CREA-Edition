@@ -144,6 +144,8 @@ public class Player extends Vector3 {
     @Setter
     private int hotbarSlot = 0;
 
+    private List<UUID> bossbars = new ArrayList<>();
+
     public Player(ServerboundHelloPacket loginPacket, Session javaSession) {
         this.packetTranslatorManager = new PacketTranslatorManager(this);
         this.javaSession = javaSession;
@@ -166,6 +168,9 @@ public class Player extends Vector3 {
 
             playerInputExecutor.scheduleAtFixedRate(playerAuthInputThread, 0, 50, TimeUnit.MILLISECONDS);
         }
+    }
+    public void setBossBar(UUID id){
+        bossbars.add(id);
     }
 
     private void onlineLogin(ServerboundHelloPacket javaLoginPacket) {
