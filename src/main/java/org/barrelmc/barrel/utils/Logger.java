@@ -12,10 +12,10 @@ public class Logger{
     return this.prefix;
   }
   public void emergency(String message){
-    System.out.println("["+TextFormat.RED.getAnsiCode()+"EMERGENCY"+TextFormat.RESET.getAnsiCode()+"] ["+ this.prefix +TextFormat.RESET.getAnsiCode()+"] "+message);
+    System.err.println("["+TextFormat.RED.getAnsiCode()+"EMERGENCY"+TextFormat.RESET.getAnsiCode()+"] ["+ this.prefix +TextFormat.RESET.getAnsiCode()+"] "+message);
   }
   public void emergency(String message, Throwable er){
-    System.out.println("["+TextFormat.RED.getAnsiCode()+"EMERGENCY"+TextFormat.RESET.getAnsiCode()+"] ["+ this.prefix +TextFormat.RESET.getAnsiCode()+"] "+message);
+    System.err.println("["+TextFormat.RED.getAnsiCode()+"EMERGENCY"+TextFormat.RESET.getAnsiCode()+"] ["+ this.prefix +TextFormat.RESET.getAnsiCode()+"] "+message);
     er.printStackTrace();
   }
   public void info(String message){
@@ -33,17 +33,17 @@ public class Logger{
     er.printStackTrace();
   }
   public void critical(String message){
-    System.out.println("["+TextFormat.DARK_RED.getAnsiCode()+"FATAL"+TextFormat.RESET.getAnsiCode()+"] ["+ this.prefix +TextFormat.RESET.getAnsiCode()+"] "+message);
+    System.err.println("["+TextFormat.DARK_RED.getAnsiCode()+"FATAL"+TextFormat.RESET.getAnsiCode()+"] ["+ this.prefix +TextFormat.RESET.getAnsiCode()+"] "+message);
   }
   public void critical(String message, Throwable er){
-    System.out.println("["+TextFormat.DARK_RED.getAnsiCode()+"FATAL"+TextFormat.RESET.getAnsiCode()+"] ["+ this.prefix +TextFormat.RESET.getAnsiCode()+"] "+message);
+    System.err.println("["+TextFormat.DARK_RED.getAnsiCode()+"FATAL"+TextFormat.RESET.getAnsiCode()+"] ["+ this.prefix +TextFormat.RESET.getAnsiCode()+"] "+message);
     er.printStackTrace();
   }
   public void error(String message){
-    System.out.println("["+TextFormat.RED.getAnsiCode()+"ERROR"+TextFormat.RESET.getAnsiCode()+"] ["+ this.prefix +TextFormat.RESET.getAnsiCode()+"] "+message);
+    System.err.println("["+TextFormat.RED.getAnsiCode()+"ERROR"+TextFormat.RESET.getAnsiCode()+"] ["+ this.prefix +TextFormat.RESET.getAnsiCode()+"] "+message);
   }
   public void error(String message, Throwable er){
-    System.out.println("["+TextFormat.RED.getAnsiCode()+"ERROR"+TextFormat.RESET.getAnsiCode()+"] ["+ this.prefix +TextFormat.RESET.getAnsiCode()+"] "+message);
+    System.err.println("["+TextFormat.RED.getAnsiCode()+"ERROR"+TextFormat.RESET.getAnsiCode()+"] ["+ this.prefix +TextFormat.RESET.getAnsiCode()+"] "+message);
     er.printStackTrace();
   }
   public void warning(String message){
