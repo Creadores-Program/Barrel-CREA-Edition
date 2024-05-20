@@ -11,10 +11,10 @@ public class ItemsConverter {
   public static void init() {
     
   }
-  public static String BedrockToJava(){
+  public static String BedrockToJava(String IDName){
     
   }
-  public static String JavaToBedrock(){
+  public static String JavaToBedrock(String IDName){
     
   }
 }
