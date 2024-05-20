@@ -9,7 +9,7 @@ import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
-import org.barrelmc.barrel.utils.Logger;
+import org.barrelmc.barrel.server.ProxyServer;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -23,7 +23,7 @@ public class Live {
     private static final String LIVE_TOKEN_URL = "https://login.live.com/oauth20_token.srf";
     private Logger logger;
     public Timer requestLiveToken(Session session, String username) throws Exception {
-        this.logger = new Logger("Live Manager");
+        this.logger = ProxyServer.getInstance().getLogger();
         Logger Log = this.logger;
         JSONObject d = AuthManager.getInstance().getXboxLive().startDeviceAuth();
 
