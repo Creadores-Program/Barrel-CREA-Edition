@@ -17,6 +17,7 @@ import org.barrelmc.barrel.utils.Utils;
 import org.barrelmc.barrel.utils.nukkit.BitArray;
 import org.barrelmc.barrel.utils.nukkit.BitArrayVersion;
 import org.barrelmc.barrel.utils.Logger;
+import org.barrelmc.barrel.server.ProxyServer;
 import org.cloudburstmc.nbt.NBTInputStream;
 import org.cloudburstmc.nbt.NbtMap;
 import org.cloudburstmc.nbt.NbtMapBuilder;
@@ -131,7 +132,7 @@ public class LevelChunkPacket implements BedrockPacketTranslator {
                     try {
                         NbtMapBuilder map = ((NbtMap) nbtStream.readTag()).toBuilder();
                         map.replace("name", "minecraft:" + map.get("name").toString());
-                        Logger logger = new Logger("Chunk Manager");
+                        Logger logger = ProxyServer.getInstance().getLogger();
                         logger.info(map.build().toString());
                         //sectionPalette[i] = BlockPaletteTranslator.getBedrockBlockId(BlockPaletteTranslator.bedrockStateFromNBTMap(map.build()));
                     } catch (IOException e) {
