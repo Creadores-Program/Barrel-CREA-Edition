@@ -10,6 +10,7 @@ import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.barrelmc.barrel.server.ProxyServer;
+import org.barrelmc.barrel.utils.Logger;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
