@@ -142,6 +142,10 @@ public class Player extends Vector3 {
     @Setter
     private int hotbarSlot = 0;
 
+    @Getter
+    @Setter
+    private String language = "en-US";
+
     public Player(ServerboundHelloPacket loginPacket, Session javaSession) {
         this.packetTranslatorManager = new PacketTranslatorManager(this);
         this.javaSession = javaSession;
@@ -355,7 +359,7 @@ public class Player extends Vector3 {
         skinData.put("DeviceOS", 7);
         skinData.put("GameVersion", ProxyServer.getInstance().getBedrockPacketCodec().getMinecraftVersion());
         skinData.put("GuiScale", 0);
-        skinData.put("LanguageCode", "en_US");
+        skinData.put("LanguageCode", this.language);
         skinData.put("PersonaPieces", new JSONArray());
         skinData.put("PersonaSkin", false);
         skinData.put("PieceTintColors", new JSONArray());
