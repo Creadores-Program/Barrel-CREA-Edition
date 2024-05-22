@@ -11,6 +11,7 @@ public class ClientInformationPacket implements JavaPacketTranslator {
     @Override
     public void translate(MinecraftPacket pk, Player player) {
         ServerboundClientInformationPacket settingsPacket = (ServerboundClientInformationPacket) pk;
+        player.setLanguage(settingsPacket.getLocale())
         RequestChunkRadiusPacket chunkRadiusPacket = new RequestChunkRadiusPacket();
 
         chunkRadiusPacket.setRadius(settingsPacket.getRenderDistance());
