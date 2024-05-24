@@ -12,6 +12,7 @@
 package org.barrelmc.barrel;
 
 import org.barrelmc.barrel.network.converter.BlockConverter;
+import org.barrelmc.barrel.network.converter.ItemsConverter;
 import org.barrelmc.barrel.server.ProxyServer;
 
 public class Barrel {
@@ -24,6 +25,7 @@ public class Barrel {
         System.getProperties().putIfAbsent("io.netty.allocator.type", "unpooled");
         System.out.println("Barrel CREA Edition is distributed under the MIT License");
         BlockConverter.init();
+        ItemsConverter.init();
         new ProxyServer(DATA_PATH);
     }
 }
