@@ -19,6 +19,5 @@ public class ChatCommandPacket implements JavaPacketTranslator {
     Cod.setUuid(java.util.UUID.fromString(player.getUUID()));
     Crp.setCommandOriginData(Cod);
     player.getBedrockClientSession().sendPacket(Crp);
-    //
   }
 }
