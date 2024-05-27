@@ -7,6 +7,7 @@ import org.barrelmc.barrel.server.ProxyServer;
 import org.cloudburstmc.protocol.bedrock.packet.CommandRequestPacket;
 import org.cloudburstmc.protocol.bedrock.data.command.CommandOriginType;
 import org.cloudburstmc.protocol.bedrock.data.command.CommandOriginData;
+import java.util.UUID;
 public class ChatCommandPacket implements JavaPacketTranslator {
   @Override
   public void translate(MinecraftPacket pk, Player player) {
@@ -14,6 +15,7 @@ public class ChatCommandPacket implements JavaPacketTranslator {
     CommandRequestPacket Crp = new CommandRequestPacket();
     Crp.setVersion(ProxyServer.getInstance().getBedrockPacketCodec().getProtocolVersion());
     Crp.setCommand(packet.getCommand());
+    CommandOriginData Cod = new CommandOriginData(CommandOriginType.PLAYER, UUID.fromString(player.getUUID()), player.getUUID(), 0);
     player.getBedrockClientSession().sendPacket(Crp);
   }
 }
