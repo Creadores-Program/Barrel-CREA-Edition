@@ -7,6 +7,7 @@ import com.github.steveice10.mc.protocol.packet.ingame.serverbound.ServerboundCl
 import com.github.steveice10.mc.protocol.packet.ingame.serverbound.inventory.ServerboundSeenAdvancementsPacket;
 import com.github.steveice10.mc.protocol.packet.ingame.serverbound.player.*;
 import com.github.steveice10.mc.protocol.packet.ingame.clientbound.inventory.ClientboundContainerClosePacket;
+import com.github.steveice10.mc.protocol.packet.ingame.serverbound.ServerboundChatCommandPacket;
 import com.github.steveice10.packetlib.packet.Packet;
 import lombok.Getter;
 import org.barrelmc.barrel.network.translator.interfaces.BedrockPacketTranslator;
@@ -111,5 +112,6 @@ public class PacketTranslatorManager {
         javaTranslators.put(ServerboundPlayerActionPacket.class, new PlayerActionPacket());
         javaTranslators.put(ServerboundSeenAdvancementsPacket.class, new SeenAdvancementsPacket());
         javaTranslators.put(ServerboundPlayerAbilitiesPacket.class, new PlayerAbilitiesPacket());
+        javaTranslators.put(ServerboundChatCommandPacket.class, new ChatCommandPacket());
     }
 }
