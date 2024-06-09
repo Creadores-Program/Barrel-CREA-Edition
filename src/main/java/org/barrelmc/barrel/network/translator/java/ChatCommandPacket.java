@@ -14,7 +14,7 @@ public class ChatCommandPacket implements JavaPacketTranslator {
     ServerboundChatCommandPacket packet = (ServerboundChatCommandPacket) pk;
     CommandRequestPacket Crp = new CommandRequestPacket();
     Crp.setVersion(ProxyServer.getInstance().getBedrockPacketCodec().getProtocolVersion());
-    Crp.setCommand(packet.getCommand());
+    Crp.setCommand("?"+packet.getCommand());
     CommandOriginData Cod = new CommandOriginData(CommandOriginType.PLAYER, UUID.fromString(player.getUUID()), player.getUUID(), 0);
     Crp.setCommandOriginData(Cod);
     player.getBedrockClientSession().sendPacket(Crp);
