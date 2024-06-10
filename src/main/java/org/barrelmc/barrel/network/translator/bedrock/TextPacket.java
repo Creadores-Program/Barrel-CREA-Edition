@@ -4,6 +4,7 @@ import com.github.steveice10.mc.protocol.packet.ingame.clientbound.ClientboundSy
 import net.kyori.adventure.text.Component;
 import org.barrelmc.barrel.network.translator.interfaces.BedrockPacketTranslator;
 import org.barrelmc.barrel.player.Player;
+import org.barrelmc.barrel.server.ProxyServer;
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket;
 
 public class TextPacket implements BedrockPacketTranslator {
@@ -14,6 +15,7 @@ public class TextPacket implements BedrockPacketTranslator {
 
         switch (packet.getType()) {
             case TIP:
+            case JUKEBOX_POPUP:
             case POPUP: {
                 player.sendTip(packet.getMessage());
                 break;
@@ -21,6 +23,14 @@ public class TextPacket implements BedrockPacketTranslator {
             case SYSTEM: {
                 player.getJavaSession().send(new ClientboundSystemChatPacket(Component.text(packet.getMessage()), false));
                 break;
+            }
+            case TRANSLATION: {
+                Ini lang = ProxyServer.getInstance().getLang();
+                if(lang != null){
+                    String msg = packet.getMessage();
+                    
+                    break;
+                }
             }
             default: {
                 player.sendMessage(packet.getMessage());
