@@ -69,9 +69,6 @@ public class ProxyServer {
     private Config config;
 
     @Getter
-    private Ini lang;
-
-    @Getter
     private String defaultSkinData;
     @Getter
     private String defaultSkinGeometry;
@@ -91,9 +88,6 @@ public class ProxyServer {
         if (!initConfig()) {
             this.getLogger().emergency("Config file not found! Terminating...");
             System.exit(1);
-        }
-        if(!initLang()){
-            this.getLogger().error("Language file not found! expect chat errors.");
         }
         loadRegistryCodec();
         loadBlockDefinitions();
@@ -120,26 +114,6 @@ public class ProxyServer {
         try {
             this.config = new Yaml().loadAs(Files.newBufferedReader(configFile.toPath()), Config.class);
         } catch (IOException e) {
-            return false;
-        }
-        return true;
-    }
-    private boolean initLang(){
-        File langfile = new File(dataPath.toFile(), "LangBedrockToJava.ini");
-        if(!langfile.exists()){
-            try(InputStream inputStream = getClass().getClassLoader().getResourceAsStream("LangBedrockToJava.ini")){
-                if(inputStream == null){
-                    return false;
-                }
-                Files.createDirectories(langfile.getParentFile().toPath());
-                Files.copy(inputStream, langfile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-            } catch(IOException e){
-                return false;
-            }
-        }
-        try{
-            this.lang = new Ini(Files.newBufferedReader(langfile.toPath()));
-        }catch(IOException e){
             return false;
         }
         return true;
