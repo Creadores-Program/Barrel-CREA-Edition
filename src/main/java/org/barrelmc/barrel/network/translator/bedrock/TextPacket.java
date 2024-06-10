@@ -24,8 +24,8 @@ public class TextPacket implements BedrockPacketTranslator {
                 break;
             }
             case TRANSLATION: {
-                if(!player.getTraslateAd()){
-                    player.setTraslateAd(true);
+                if(player.getTraslateAd() != "true"){
+                    player.setTraslateAd("true");
                     player.sendMessage("§cChat translation not implemented! Force language on Minecraft bedrock server or use Translator for Geyser Reverse Barrel for Nukkit");
                 }
             }
