@@ -2,6 +2,7 @@ package org.barrelmc.barrel.network.translator.bedrock;
 
 import com.github.steveice10.mc.protocol.packet.ingame.clientbound.ClientboundSystemChatPacket;
 import net.kyori.adventure.text.Component;
+import org.ini4j.Ini;
 import org.barrelmc.barrel.network.translator.interfaces.BedrockPacketTranslator;
 import org.barrelmc.barrel.player.Player;
 import org.barrelmc.barrel.server.ProxyServer;
