@@ -92,6 +92,10 @@ public class Player extends Vector3 {
     @Getter
     private StartGamePacket startGamePacketCache;
 
+    @Getter
+    @Setter
+    private boolean traslateAd = false;
+
     private boolean tickPlayerInputStarted = false;
     private final ScheduledExecutorService playerInputExecutor = Executors.newScheduledThreadPool(1);
 
