@@ -25,6 +25,7 @@ import com.github.steveice10.packetlib.event.server.SessionRemovedEvent;
 import com.github.steveice10.packetlib.tcp.TcpServer;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
+import org.ini4j.Ini;
 import org.barrelmc.barrel.auth.AuthManager;
 import org.barrelmc.barrel.auth.server.AuthServer;
 import org.barrelmc.barrel.config.Config;
@@ -68,6 +69,9 @@ public class ProxyServer {
     private Config config;
 
     @Getter
+    private Ini lang;
+
+    @Getter
     private String defaultSkinData;
     @Getter
     private String defaultSkinGeometry;
@@ -87,6 +91,9 @@ public class ProxyServer {
         if (!initConfig()) {
             this.getLogger().emergency("Config file not found! Terminating...");
             System.exit(1);
+        }
+        if(!initLang()){
+            this.getLogger().error("Language file not found! expect chat errors.");
         }
         loadRegistryCodec();
         loadBlockDefinitions();
@@ -117,7 +124,26 @@ public class ProxyServer {
         }
         return true;
     }
-
+    private boolean initLang(){
+        File langfile = new File(dataPath.toFile(), "LangBedrockToJava.ini");
+        if(!langfile.exists()){
+            try(InputStream inputStream = getClass().getClassLoader().getResourceAsStream("LangBedrockToJava.ini")){
+                if(inputStream == null){
+                    return false;
+                }
+                Files.createDirectories(configFile.getParentFile().toPath());
+                Files.copy(inputStream, langfile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            } catch(IOException e){
+                return false;
+            }
+        }
+        try{
+            this.lang = new Ini(Files.newBufferedReader(langfile.toPath()));
+        }catch(IOException e){
+            return false;
+        }
+        return true;
+    }
     private void loadRegistryCodec() {
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("registry-codec.nbt");
              DataInputStream dataInputStream = new DataInputStream(new GZIPInputStream(Objects.requireNonNull(inputStream)))) {
