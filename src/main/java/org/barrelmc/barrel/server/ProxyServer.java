@@ -25,7 +25,6 @@ import com.github.steveice10.packetlib.event.server.SessionRemovedEvent;
 import com.github.steveice10.packetlib.tcp.TcpServer;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
-import org.ini4j.Ini;
 import org.barrelmc.barrel.auth.AuthManager;
 import org.barrelmc.barrel.auth.server.AuthServer;
 import org.barrelmc.barrel.config.Config;
