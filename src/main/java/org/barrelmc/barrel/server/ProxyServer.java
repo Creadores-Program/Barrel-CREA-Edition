@@ -131,7 +131,7 @@ public class ProxyServer {
                 if(inputStream == null){
                     return false;
                 }
-                Files.createDirectories(configFile.getParentFile().toPath());
+                Files.createDirectories(langfile.getParentFile().toPath());
                 Files.copy(inputStream, langfile.toPath(), StandardCopyOption.REPLACE_EXISTING);
             } catch(IOException e){
                 return false;
