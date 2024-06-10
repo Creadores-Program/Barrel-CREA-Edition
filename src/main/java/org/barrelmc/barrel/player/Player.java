@@ -94,7 +94,7 @@ public class Player extends Vector3 {
 
     @Setter
     @Getter
-    private boolean traslateAd = false;
+    private String traslateAd = "false";
 
     private boolean tickPlayerInputStarted = false;
     private final ScheduledExecutorService playerInputExecutor = Executors.newScheduledThreadPool(1);
