@@ -2,10 +2,8 @@ package org.barrelmc.barrel.network.translator.bedrock;
 
 import com.github.steveice10.mc.protocol.packet.ingame.clientbound.ClientboundSystemChatPacket;
 import net.kyori.adventure.text.Component;
-import org.ini4j.Ini;
 import org.barrelmc.barrel.network.translator.interfaces.BedrockPacketTranslator;
 import org.barrelmc.barrel.player.Player;
-import org.barrelmc.barrel.server.ProxyServer;
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket;
 
 public class TextPacket implements BedrockPacketTranslator {
@@ -26,12 +24,7 @@ public class TextPacket implements BedrockPacketTranslator {
                 break;
             }
             case TRANSLATION: {
-                Ini lang = ProxyServer.getInstance().getLang();
-                if(lang != null){
-                    String msg = packet.getMessage();
-                    
-                    break;
-                }
+                
             }
             default: {
                 player.sendMessage(packet.getMessage());
