@@ -92,8 +92,8 @@ public class Player extends Vector3 {
     @Getter
     private StartGamePacket startGamePacketCache;
 
-    @Getter
     @Setter
+    @Getter
     private boolean traslateAd = false;
 
     private boolean tickPlayerInputStarted = false;
