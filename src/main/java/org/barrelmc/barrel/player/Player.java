@@ -151,6 +151,10 @@ public class Player extends Vector3 {
     @Setter
     private String language = "en-US";
 
+    @Getter
+    @Setter
+    private int distanceRender = 16;
+
     public Player(ServerboundHelloPacket loginPacket, Session javaSession) {
         this.packetTranslatorManager = new PacketTranslatorManager(this);
         this.javaSession = javaSession;
