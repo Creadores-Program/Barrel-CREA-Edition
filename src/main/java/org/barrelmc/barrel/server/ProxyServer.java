@@ -77,12 +77,14 @@ public class ProxyServer {
 
     @Getter
     private NbtBlockDefinitionRegistry blockDefinitions;
-    
+
+    @Getter
     private Logger logger;
 
     public ProxyServer(String dataPath) {
         instance = this;
         this.logger = new Logger(TextFormat.GOLD.getAnsiCode()+"BarrelMC");
+        this.getLogger().info("Barrel 1.1.0 Dev Starting...");
         this.dataPath = Paths.get(dataPath);
         if (!initConfig()) {
             this.getLogger().emergency("Config file not found! Terminating...");
@@ -92,9 +94,6 @@ public class ProxyServer {
         loadBlockDefinitions();
         loadDefaultSkin();
         startServer();
-    }
-    public Logger getLogger(){
-        return this.logger;
     }
 
     private boolean initConfig() {
