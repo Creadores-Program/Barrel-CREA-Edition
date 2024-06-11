@@ -153,7 +153,7 @@ public class Player extends Vector3 {
 
     @Getter
     @Setter
-    private int distanceRender = 8;
+    private int distanceRender = 10;
 
     public Player(ServerboundHelloPacket loginPacket, Session javaSession) {
         this.packetTranslatorManager = new PacketTranslatorManager(this);
