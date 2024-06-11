@@ -13,6 +13,7 @@ public class ClientInformationPacket implements JavaPacketTranslator {
         ServerboundClientInformationPacket settingsPacket = (ServerboundClientInformationPacket) pk;
         RequestChunkRadiusPacket chunkRadiusPacket = new RequestChunkRadiusPacket();
         player.setLanguage(settingsPacket.getLocale());
+        player.setDistanceRender(settingsPacket.getRenderDistance());
         chunkRadiusPacket.setRadius(settingsPacket.getRenderDistance());
         player.getBedrockClientSession().sendPacketImmediately(chunkRadiusPacket);
     }
