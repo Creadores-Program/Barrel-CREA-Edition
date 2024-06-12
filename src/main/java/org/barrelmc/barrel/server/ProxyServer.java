@@ -84,7 +84,7 @@ public class ProxyServer {
     public ProxyServer(String dataPath) {
         instance = this;
         this.logger = new Logger(TextFormat.GOLD.getAnsiCode()+"BarrelMC");
-        this.getLogger().info("Barrel 1.1.1 Dev Starting...");
+        this.getLogger().info("Barrel 1.1.5 Dev Starting...");
         this.dataPath = Paths.get(dataPath);
         if (!initConfig()) {
             this.getLogger().emergency("Config file not found! Terminating...");
