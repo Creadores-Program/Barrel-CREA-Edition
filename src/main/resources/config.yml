@@ -16,3 +16,5 @@ bedrockAddress: "join.servermc.xyz"
 bedrockPort: 10171
 # Use xbox login? (offline|online)
 auth: online
+# Use id by java? (only xbox login offline)
+useJavaId: false
