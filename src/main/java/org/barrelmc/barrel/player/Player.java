@@ -10,7 +10,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.steveice10.mc.protocol.data.game.entity.object.Direction;
 import com.github.steveice10.mc.protocol.packet.ingame.clientbound.ClientboundSystemChatPacket;
 import com.github.steveice10.mc.protocol.packet.ingame.clientbound.level.ClientboundSetChunkCacheCenterPacket;
-import com.github.steveice10.mc.protocol.packet.ingame.clientbound.level.ClientboundSetChunkCacheRadiusPacket;
 import com.github.steveice10.mc.protocol.packet.login.serverbound.ServerboundHelloPacket;
 import com.github.steveice10.packetlib.Session;
 import io.netty.bootstrap.Bootstrap;
@@ -150,10 +149,6 @@ public class Player extends Vector3 {
     @Getter
     @Setter
     private String language = "en-US";
-
-    @Getter
-    @Setter
-    private int distanceRender = 10;
 
     public Player(ServerboundHelloPacket loginPacket, Session javaSession) {
         this.packetTranslatorManager = new PacketTranslatorManager(this);
@@ -445,7 +440,6 @@ public class Player extends Vector3 {
     public void setPosition(Vector3f vector3f) {
         if (this.getFloorX() >> 4 != vector3f.getFloorX() >> 4 || this.getFloorZ() >> 4 != vector3f.getFloorZ() >> 4) {
             this.javaSession.send(new ClientboundSetChunkCacheCenterPacket(vector3f.getFloorX() >> 4, vector3f.getFloorZ() >> 4));
-            this.javaSession.send(new ClientboundSetChunkCacheRadiusPacket(this.distanceRender));
         }
         super.setPosition(vector3f);
     }
@@ -454,7 +448,6 @@ public class Player extends Vector3 {
     public void setPosition(double x, double y, double z) {
         if (this.getFloorX() >> 4 != (int) x >> 4 || this.getFloorZ() >> 4 != (int) z >> 4) {
             this.javaSession.send(new ClientboundSetChunkCacheCenterPacket((int) x >> 4, (int) z >> 4));
-            this.javaSession.send(new ClientboundSetChunkCacheRadiusPacket(this.distanceRender));
         }
         super.setPosition(x, y, z);
     }
