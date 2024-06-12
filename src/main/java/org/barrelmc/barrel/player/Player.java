@@ -272,7 +272,7 @@ public class Player extends Vector3 {
     private void offlineLogin(ServerboundHelloPacket javaLoginPacket) {
         this.xuid = "";
         this.username = this.javaUsername = javaLoginPacket.getUsername();
-        if(javaLoginPacket.getProfileId() != null){
+        if(ProxyServer.getInstance().getConfig().getUseJavaId() && javaLoginPacket.getProfileId() != null){
             this.UUID = javaLoginPacket.getProfileId().toString();
         }else{
             this.UUID = java.util.UUID.randomUUID().toString();
