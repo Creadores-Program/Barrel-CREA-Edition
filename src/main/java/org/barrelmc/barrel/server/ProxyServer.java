@@ -120,7 +120,14 @@ public class ProxyServer {
             return false;
         }
         if(this.config.getConfigVersion() == null || this.config.getConfigVersion() != this.configVersion){
-            
+            this.logger.info("Update Config...");
+            switch(this.config.getConfigVersion()){
+                default:
+                    this.setUseJavaId(false);
+                    break;
+            }
+            this.config.setConfigVersion(this.configVersion);
+            this.saveConfig();
         }
         return true;
     }
