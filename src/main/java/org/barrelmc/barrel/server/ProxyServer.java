@@ -123,7 +123,7 @@ public class ProxyServer {
             this.logger.info("Update Config...");
             switch(this.config.getConfigVersion()){
                 default:
-                    this.setUseJavaId(false);
+                    this.config.setUseJavaId(false);
                     break;
             }
             this.config.setConfigVersion(this.configVersion);
