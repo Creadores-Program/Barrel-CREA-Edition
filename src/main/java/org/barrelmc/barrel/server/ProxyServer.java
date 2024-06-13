@@ -67,6 +67,8 @@ public class ProxyServer {
     @Getter
     private Config config;
 
+    private Integer configVersion = 0;
+
     @Getter
     private String defaultSkinData;
     @Getter
@@ -116,6 +118,9 @@ public class ProxyServer {
             this.config = this.yaml.loadAs(Files.newBufferedReader(configFile.toPath()), Config.class);
         } catch (IOException e) {
             return false;
+        }
+        if(this.config.getConfigVersion() == null || this.config.getConfigVersion() != this.configVersion){
+            
         }
         return true;
     }
