@@ -120,6 +120,7 @@ public class ProxyServer {
         return true;
     }
     public void saveConfig(){
+        File configFile = new File(dataPath.toFile(), "config.yml");
         try{
         String data = this.yaml.dumpAsMap(this.config);
         Files.write(configFile.toPath(), data.getBytes());
