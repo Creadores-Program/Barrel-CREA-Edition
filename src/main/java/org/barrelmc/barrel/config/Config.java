@@ -48,9 +48,9 @@ public class Config {
     
     @Setter
     @Getter
-    public Boolean premiumPlayerJava;
+    public boolean premiumPlayerJava;
     
     @Setter
     @Getter
-    public Boolean useJavaId;
+    public boolean useJavaId;
 }
