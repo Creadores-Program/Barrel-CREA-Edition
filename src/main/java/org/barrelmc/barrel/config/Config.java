@@ -53,8 +53,4 @@ public class Config {
     @Setter
     @Getter
     public Boolean useJavaId;
-
-    @Setter
-    @Getter
-    public Integer configVersion;
 }
