@@ -83,8 +83,6 @@ public class ProxyServer {
     @Getter
     private Logger logger;
 
-    private Yaml yaml;
-
     public ProxyServer(String dataPath) {
         instance = this;
         this.logger = new Logger(TextFormat.GOLD.getAnsiCode()+"BarrelMC");
@@ -114,31 +112,11 @@ public class ProxyServer {
             }
         }
         try {
-            this.yaml = new Yaml();
-            this.config = this.yaml.loadAs(Files.newBufferedReader(configFile.toPath()), Config.class);
+            this.config = new Yaml().loadAs(Files.newBufferedReader(configFile.toPath()), Config.class);
         } catch (IOException e) {
             return false;
         }
-        if(this.config.getConfigVersion() == null || this.config.getConfigVersion() != this.configVersion){
-            this.logger.info("Update Config...");
-            switch(this.config.getConfigVersion()){
-                default:
-                    this.config.setUseJavaId(false);
-                    break;
-            }
-            this.config.setConfigVersion(this.configVersion);
-            this.saveConfig();
-        }
         return true;
-    }
-    public void saveConfig(){
-        File configFile = new File(dataPath.toFile(), "config.yml");
-        try{
-        String data = this.yaml.dumpAsMap(this.config);
-        Files.write(configFile.toPath(), data.getBytes());
-        }catch(IOException e){
-            e.printStackTrace();
-        }
     }
     private void loadRegistryCodec() {
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("registry-codec.nbt");
