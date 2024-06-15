@@ -34,7 +34,7 @@ public class TransferPacket implements BedrockPacketTranslator{
                         .connect(newServer)
                         .awaitUninterruptibly().channel());
       }catch(Exception exception){
-        player.getJavaSession().disconnect("Failed to connect: " + exception);
+        player.getJavaSession().disconnect("Failed to transfer: " + exception);
       }
     }else{
       player.setChannel();
