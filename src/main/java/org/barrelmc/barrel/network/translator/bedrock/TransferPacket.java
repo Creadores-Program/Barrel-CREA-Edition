@@ -21,7 +21,7 @@ public class TransferPacket implements BedrockPacketTranslator{
     InetSocketAddress newServer = new InetSocketAddress(packet.getAddress(), packet.getPort());
     if(ProxyServer.getInstance().getConfig().getAuth() == "offline"){
       try{
-      player.setChannel(new Bootstrap().channelFactory(RakChannelFactory.client(NioDatagramChannel.class))
+      player.setChannel((Channel) new Bootstrap().channelFactory(RakChannelFactory.client(NioDatagramChannel.class))
                        .group(new NioEventLoopGroup())
                         .option(RakChannelOption.RAK_PROTOCOL_VERSION, ProxyServer.getInstance().getBedrockPacketCodec().getRaknetProtocolVersion())
                         .handler(new BedrockClientInitializer() {
