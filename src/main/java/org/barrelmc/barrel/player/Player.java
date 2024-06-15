@@ -60,6 +60,7 @@ public class Player extends Vector3 {
     private final Session javaSession;
     @Getter
     private BedrockClientSession bedrockClientSession;
+    @Setter
     @Getter
     private Channel channel;
     @Getter
