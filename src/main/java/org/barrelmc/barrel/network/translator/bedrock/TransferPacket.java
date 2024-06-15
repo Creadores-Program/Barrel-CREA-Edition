@@ -5,6 +5,8 @@ import org.barrelmc.barrel.server.ProxyServer;
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket;
 import org.cloudburstmc.netty.channel.raknet.RakChannelFactory;
 import org.cloudburstmc.netty.channel.raknet.config.RakChannelOption;
+import org.cloudburstmc.protocol.bedrock.netty.initializer.BedrockClientInitializer;
+import org.cloudburstmc.protocol.bedrock.BedrockClientSession;
 
 import java.net.InetSocketAddress;
 import io.netty.channel.Channel;
@@ -17,10 +19,23 @@ public class TransferPacket implements BedrockPacketTranslator{
     org.cloudburstmc.protocol.bedrock.packet.TransferPacket packet = (org.cloudburstmc.protocol.bedrock.packet.TransferPacket) pk;
     InetSocketAddress newServer = new InetSocketAddress(packet.getAddress(), packet.getPort());
     if(ProxyServer.getInstance().getConfig().getAuth() == "offline"){
+      try{
       player.setChannel(new Bootstrap().channelFactory(RakChannelFactory.client(NioDatagramChannel.class))
                        .group(new NioEventLoopGroup())
-                        .option(RakChannelOption.RAK_PROTOCOL_VERSION, ProxyServer.getInstance().getBedrockPacketCodec().ge)
-                       );
+                        .option(RakChannelOption.RAK_PROTOCOL_VERSION, ProxyServer.getInstance().getBedrockPacketCodec().getRaknetProtocolVersion())
+                        .handler(new BedrockClientInitializer() {
+                          @Override
+                          protected void initSession(BedrockClientSession session) {
+                            player.setBedrockClientSession(session);
+                            session.setCodec(ProxyServer.getInstance().getBedrockPacketCodec());
+                            session.sendPacketImmediately(requestNetworkSettingsPacket);
+                          }
+                        })
+                        .connect(newServer)
+                        .awaitUninterruptibly().channel());
+      }catch(Exception exception){
+        player.getJavaSession().disconnect("Failed to connect: " + exception);
+      }
     }else{
       player.setChannel();
     }
