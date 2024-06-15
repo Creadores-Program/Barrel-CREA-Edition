@@ -7,6 +7,7 @@ import org.cloudburstmc.netty.channel.raknet.RakChannelFactory;
 import org.cloudburstmc.netty.channel.raknet.config.RakChannelOption;
 import org.cloudburstmc.protocol.bedrock.netty.initializer.BedrockClientInitializer;
 import org.cloudburstmc.protocol.bedrock.BedrockClientSession;
+import org.cloudburstmc.protocol.bedrock.packet.RequestNetworkSettingsPacket;
 
 import java.net.InetSocketAddress;
 import io.netty.channel.Channel;
@@ -28,6 +29,8 @@ public class TransferPacket implements BedrockPacketTranslator{
                           protected void initSession(BedrockClientSession session) {
                             player.setBedrockClientSession(session);
                             session.setCodec(ProxyServer.getInstance().getBedrockPacketCodec());
+                            RequestNetworkSettingsPacket requestNetworkSettingsPacket = new RequestNetworkSettingsPacket();
+                            requestNetworkSettingsPacket.setProtocolVersion(ProxyServer.getInstance().getBedrockPacketCodec().getProtocolVersion());
                             session.sendPacketImmediately(requestNetworkSettingsPacket);
                           }
                         })
