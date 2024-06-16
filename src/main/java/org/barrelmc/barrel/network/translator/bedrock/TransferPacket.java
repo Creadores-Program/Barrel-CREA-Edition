@@ -15,7 +15,7 @@ public class TransferPacket implements BedrockPacketTranslator{
       }
     }else{
       try{
-        player.onlineLogin(player.getJavaSession(), packet.getAddress(), packet.getPort());
+        player.onlineLogin(player.getHelloPacketJava(), packet.getAddress(), packet.getPort());
       }catch(Exception exception){
         player.getJavaSession().disconnect("Failed to transfer: " + exception);
       }
