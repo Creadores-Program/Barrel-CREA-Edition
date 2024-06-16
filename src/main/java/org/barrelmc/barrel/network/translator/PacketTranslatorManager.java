@@ -98,6 +98,7 @@ public class PacketTranslatorManager {
         bedrockTranslators.put(NetworkSettingsPacket.class, new org.barrelmc.barrel.network.translator.bedrock.NetworkSettingsPacket());
         bedrockTranslators.put(SetTitlePacket.class, new org.barrelmc.barrel.network.translator.bedrock.SetTitlePacket());
         bedrockTranslators.put(ToastRequestPacket.class, new org.barrelmc.barrel.network.translator.bedrock.ToastRequestPacket());
+        bedrockTranslators.put(TransferPacket.class, new org.barrelmc.barrel.network.translator.bedrock.TransferPacket());
         
         // Java packets
         javaTranslators.put(ServerboundChatPacket.class, new ChatPacket());
