@@ -175,10 +175,12 @@ public class Player extends Vector3 {
             playerInputExecutor.scheduleAtFixedRate(playerAuthInputThread, 0, 50, TimeUnit.MILLISECONDS);
         }
     }
-
-    private void onlineLogin(ServerboundHelloPacket javaLoginPacket) {
+    public void onlineLogin(ServerboundHelloPacket javaLoginPacket){
         Config config = ProxyServer.getInstance().getConfig();
-        InetSocketAddress bedrockAddress = new InetSocketAddress(config.getBedrockAddress(), config.getBedrockPort());
+        this.onlineLogin(javaLoginPacket, config.getBedrockAddress(), config.getBedrockPort());
+    }
+    public void onlineLogin(ServerboundHelloPacket javaLoginPacket, String Ip, int Port) {
+        InetSocketAddress bedrockAddress = new InetSocketAddress(Ip, Port);
         try {
             channel = new Bootstrap().channelFactory(RakChannelFactory.client(NioDatagramChannel.class))
                     .group(new NioEventLoopGroup())
@@ -270,8 +272,11 @@ public class Player extends Vector3 {
         loginPacket.setProtocolVersion(ProxyServer.getInstance().getBedrockPacketCodec().getProtocolVersion());
         return loginPacket;
     }
-
-    private void offlineLogin(ServerboundHelloPacket javaLoginPacket) {
+    public void offlineLogin(ServerboundHelloPacket javaLoginPacket){
+        Config config = ProxyServer.getInstance().getConfig();
+        this.offlineLogin(javaLoginPacket, config.getBedrockAddress(), config.getBedrockPort());
+    }
+    public void offlineLogin(ServerboundHelloPacket javaLoginPacket, String Ip, int Port) {
         this.xuid = "";
         this.username = this.javaUsername = javaLoginPacket.getUsername();
         if(ProxyServer.getInstance().getConfig().getUseJavaId() && javaLoginPacket.getProfileId() != null){
@@ -279,8 +284,7 @@ public class Player extends Vector3 {
         }else{
             this.UUID = java.util.UUID.randomUUID().toString();
         }
-        Config config = ProxyServer.getInstance().getConfig();
-        InetSocketAddress bedrockAddress = new InetSocketAddress(config.getBedrockAddress(), config.getBedrockPort());
+        InetSocketAddress bedrockAddress = new InetSocketAddress(Ip, Port);
         try {
             channel = new Bootstrap().channelFactory(RakChannelFactory.client(NioDatagramChannel.class))
                     .group(new NioEventLoopGroup())
