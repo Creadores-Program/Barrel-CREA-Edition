@@ -72,6 +72,9 @@ public class Player extends Vector3 {
     @Getter
     private ECPrivateKey privateKey;
 
+    @Getter
+    private ServerboundHelloPacket helloPacketJava;
+
     @Setter
     @Getter
     private long runtimeEntityId;
@@ -154,6 +157,7 @@ public class Player extends Vector3 {
     public Player(ServerboundHelloPacket loginPacket, Session javaSession) {
         this.packetTranslatorManager = new PacketTranslatorManager(this);
         this.javaSession = javaSession;
+        this.helloPacketJava = loginPacket;
 
         if (ProxyServer.getInstance().getConfig().getAuth().equals("offline")) {
             this.offlineLogin(loginPacket);
