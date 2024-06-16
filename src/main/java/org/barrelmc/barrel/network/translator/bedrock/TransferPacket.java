@@ -13,6 +13,8 @@ public class TransferPacket implements BedrockPacketTranslator{
         if (player.getChannel().isOpen()) {
             player.getChannel().disconnect();
             player.getChannel().parent().disconnect();
+            player.getChannel().close();
+            player.getChannel().parent().close();
         }
     org.cloudburstmc.protocol.bedrock.packet.TransferPacket packet = (org.cloudburstmc.protocol.bedrock.packet.TransferPacket) pk;
     if(ProxyServer.getInstance().getConfig().getAuth() == "offline"){
