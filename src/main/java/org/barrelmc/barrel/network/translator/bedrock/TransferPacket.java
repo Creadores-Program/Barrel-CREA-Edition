@@ -9,7 +9,7 @@ public class TransferPacket implements BedrockPacketTranslator{
     org.cloudburstmc.protocol.bedrock.packet.TransferPacket packet = (org.cloudburstmc.protocol.bedrock.packet.TransferPacket) pk;
     if(ProxyServer.getInstance().getConfig().getAuth() == "offline"){
       try{
-        player.offlineLogin(player.getJavaSession(), packet.getAddress(), packet.getPort());
+        player.offlineLogin(player.getHelloPacketJava(), packet.getAddress(), packet.getPort());
       }catch(Exception exception){
         player.getJavaSession().disconnect("Failed to transfer: " + exception);
       }
