@@ -6,10 +6,17 @@ import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket;
 public class TransferPacket implements BedrockPacketTranslator{
   @Override
   public void translate(BedrockPacket pk, Player player){
+    try {
+            player.getBedrockClientSession().disconnect();
+        } catch (Throwable ignored) {
+        }
+        if (player.getChannel().isOpen()) {
+            player.getChannel().disconnect();
+            player.getChannel().parent().disconnect();
+        }
     org.cloudburstmc.protocol.bedrock.packet.TransferPacket packet = (org.cloudburstmc.protocol.bedrock.packet.TransferPacket) pk;
     if(ProxyServer.getInstance().getConfig().getAuth() == "offline"){
       try{
-        player.getChannel().close();
         player.offlineLogin(player.getHelloPacketJava(), packet.getAddress(), packet.getPort());
       }catch(Exception exception){
         player.getJavaSession().disconnect("Failed to transfer: " + exception);
