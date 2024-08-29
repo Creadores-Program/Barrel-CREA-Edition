@@ -23,7 +23,7 @@
         <dependency>
             <groupId>org.cloudburstmc.protocol</groupId>
             <artifactId>bedrock-connection</artifactId>
-            <version>3.0.0.Beta1-SNAPSHOT</version>
+            <version>3.0.0.Beta3-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -40,12 +40,12 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>2.0.50</version>
+            <version>2.0.52</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.32</version>
+            <version>1.18.34</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
