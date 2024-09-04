@@ -37,7 +37,7 @@ import org.cloudburstmc.nbt.NbtMap;
 import org.cloudburstmc.nbt.NbtType;
 import org.cloudburstmc.nbt.NbtUtils;
 import org.cloudburstmc.protocol.bedrock.codec.BedrockCodec;
-import org.cloudburstmc.protocol.bedrock.codec.v712.Bedrock_v712;
+import org.cloudburstmc.protocol.bedrock.codec.v712.Bedrock_v686;
 import org.yaml.snakeyaml.Yaml;
 import org.barrelmc.barrel.utils.Logger;
 import org.barrelmc.barrel.utils.nukkit.TextFormat;
@@ -59,7 +59,7 @@ public class ProxyServer {
     @Getter
     private final Map<String, Player> bedrockPlayers = new ConcurrentHashMap<>();
     @Getter
-    private final BedrockCodec bedrockPacketCodec = Bedrock_v712.CODEC;
+    private final BedrockCodec bedrockPacketCodec = Bedrock_v686.CODEC;
 
     @Getter
     private final Path dataPath;
