@@ -37,7 +37,7 @@ import org.cloudburstmc.nbt.NbtMap;
 import org.cloudburstmc.nbt.NbtType;
 import org.cloudburstmc.nbt.NbtUtils;
 import org.cloudburstmc.protocol.bedrock.codec.BedrockCodec;
-import org.cloudburstmc.protocol.bedrock.codec.v712.Bedrock_v686;
+import org.cloudburstmc.protocol.bedrock.codec.v686.Bedrock_v686;
 import org.yaml.snakeyaml.Yaml;
 import org.barrelmc.barrel.utils.Logger;
 import org.barrelmc.barrel.utils.nukkit.TextFormat;
