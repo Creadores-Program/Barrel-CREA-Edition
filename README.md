@@ -6,7 +6,7 @@
 
 - Java 11
 - Minecraft: Java Edition v1.20.1 Or mod [ViaForge](https://www.modrinth.com/mod/viaforge) Or mod [viaFabric](https://github.com/ViaVersion/ViaFabric) Or proxy Or Mod that integrates multiversion to the client
-- Bedrock Edition server v1.21.2 Or [NukkitPM1E](https://github.com/PetteriM1/NukkitPetteriM1Edition) Or a multiversion server
+- Bedrock Edition server v1.20.70 Or [NukkitPM1E](https://github.com/PetteriM1/NukkitPetteriM1Edition) Or a multiversion server
 
 ## Need implemented
 
