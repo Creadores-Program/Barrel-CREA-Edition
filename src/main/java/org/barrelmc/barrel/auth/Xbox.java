@@ -1,7 +1,8 @@
 package org.barrelmc.barrel.auth;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
 import org.barrelmc.barrel.server.ProxyServer;
 import org.barrelmc.barrel.utils.FileManager;
 import org.barrelmc.barrel.utils.Utils;
@@ -47,24 +48,24 @@ public class Xbox {
     }
 
     public String getUserToken(ECPublicKey publicKey, ECPrivateKey privateKey) throws Exception {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("RelyingParty", "http://auth.xboxlive.com");
-        jsonObject.put("TokenType", "JWT");
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("RelyingParty", "http://auth.xboxlive.com");
+        jsonObject.addProperty("TokenType", "JWT");
 
-        JSONObject properties = new JSONObject();
-        jsonObject.put("Properties", properties);
-        properties.put("AuthMethod", "RPS");
-        properties.put("SiteName", "user.auth.xboxlive.com");
-        properties.put("RpsTicket", "t=" + this.accessToken);
+        JsonObject properties = new JsonObject();
+        jsonObject.addProperty("Properties", properties);
+        properties.addProperty("AuthMethod", "RPS");
+        properties.addProperty("SiteName", "user.auth.xboxlive.com");
+        properties.addProperty("RpsTicket", "t=" + this.accessToken);
 
-        JSONObject proofKey = new JSONObject();
-        properties.put("ProofKey", proofKey);
-        proofKey.put("crv", "P-256");
-        proofKey.put("alg", "ES256");
-        proofKey.put("use", "sig");
-        proofKey.put("kty", "EC");
-        proofKey.put("x", this.getProofKeyX(publicKey));
-        proofKey.put("y", this.getProofKeyY(publicKey));
+        JsonObject proofKey = new JsonObject();
+        properties.addProperty("ProofKey", proofKey);
+        proofKey.addProperty("crv", "P-256");
+        proofKey.addProperty("alg", "ES256");
+        proofKey.addProperty("use", "sig");
+        proofKey.addProperty("kty", "EC");
+        proofKey.addProperty("x", this.getProofKeyX(publicKey));
+        proofKey.addProperty("y", this.getProofKeyY(publicKey));
 
         URL url = new URL(this.xboxUserAuthURL);
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
@@ -77,32 +78,32 @@ public class Xbox {
         this.writeJsonObjectToPost(connection, jsonObject);
 
         String response = FileManager.getFileContents(connection.getInputStream());
-        JSONObject responseJsonObject = JSONObject.parseObject(response);
+        JsonObject responseJsonObject = JsonParser.parseString(response).getAsJsonObject();
 
-        return responseJsonObject.getString("Token");
+        return responseJsonObject.get("Token").getAsString();
     }
 
     public String getDeviceToken(ECPublicKey publicKey, ECPrivateKey privateKey) throws Exception {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("RelyingParty", "http://auth.xboxlive.com");
-        jsonObject.put("TokenType", "JWT");
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("RelyingParty", "http://auth.xboxlive.com");
+        jsonObject.addProperty("TokenType", "JWT");
 
-        JSONObject properties = new JSONObject();
-        jsonObject.put("Properties", properties);
-        properties.put("AuthMethod", "ProofOfPossession");
-        properties.put("DeviceType", "Nintendo");
-        properties.put("Id", UUID.randomUUID().toString());
-        properties.put("SerialNumber", UUID.randomUUID().toString());
-        properties.put("Version", "0.0.0.0");
+        JsonObject properties = new JsonObject();
+        jsonObject.addProperty("Properties", properties);
+        properties.addProperty("AuthMethod", "ProofOfPossession");
+        properties.addProperty("DeviceType", "Nintendo");
+        properties.addProperty("Id", UUID.randomUUID().toString());
+        properties.addProperty("SerialNumber", UUID.randomUUID().toString());
+        properties.addProperty("Version", "0.0.0.0");
 
-        JSONObject proofKey = new JSONObject();
-        properties.put("ProofKey", proofKey);
-        proofKey.put("crv", "P-256");
-        proofKey.put("alg", "ES256");
-        proofKey.put("use", "sig");
-        proofKey.put("kty", "EC");
-        proofKey.put("x", this.getProofKeyX(publicKey));
-        proofKey.put("y", this.getProofKeyY(publicKey));
+        JsonObject proofKey = new JsonObject();
+        properties.addProperty("ProofKey", proofKey);
+        proofKey.addProperty("crv", "P-256");
+        proofKey.addProperty("alg", "ES256");
+        proofKey.addProperty("use", "sig");
+        proofKey.addProperty("kty", "EC");
+        proofKey.addProperty("x", this.getProofKeyX(publicKey));
+        proofKey.addProperty("y", this.getProofKeyY(publicKey));
 
         URL url = new URL(this.xboxDeviceAuthURL);
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
@@ -115,31 +116,31 @@ public class Xbox {
         this.writeJsonObjectToPost(connection, jsonObject);
 
         String responce = FileManager.getFileContents(connection.getInputStream());
-        JSONObject responceJsonObject = JSONObject.parseObject(responce);
+        JsonObject responceJsonObject = JsonParser.parseString(responce).getAsJsonObject();
 
-        return responceJsonObject.getString("Token");
+        return responceJsonObject.get("Token").getAsString();
     }
 
     public String getTitleToken(ECPublicKey publicKey, ECPrivateKey privateKey, String deviceToken) throws Exception {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("RelyingParty", "http://auth.xboxlive.com");
-        jsonObject.put("TokenType", "JWT");
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("RelyingParty", "http://auth.xboxlive.com");
+        jsonObject.addProperty("TokenType", "JWT");
 
-        JSONObject properties = new JSONObject();
-        jsonObject.put("Properties", properties);
-        properties.put("AuthMethod", "RPS");
-        properties.put("DeviceToken", deviceToken);
-        properties.put("SiteName", "user.auth.xboxlive.com");
-        properties.put("RpsTicket", "t=" + this.accessToken);
+        JsonObject properties = new JsonObject();
+        jsonObject.addProperty("Properties", properties);
+        properties.addProperty("AuthMethod", "RPS");
+        properties.addProperty("DeviceToken", deviceToken);
+        properties.addProperty("SiteName", "user.auth.xboxlive.com");
+        properties.addProperty("RpsTicket", "t=" + this.accessToken);
 
-        JSONObject proofKey = new JSONObject();
-        properties.put("ProofKey", proofKey);
-        proofKey.put("crv", "P-256");
-        proofKey.put("alg", "ES256");
-        proofKey.put("use", "sig");
-        proofKey.put("kty", "EC");
-        proofKey.put("x", this.getProofKeyX(publicKey));
-        proofKey.put("y", this.getProofKeyY(publicKey));
+        JsonObject proofKey = new JsonObject();
+        properties.addProperty("ProofKey", proofKey);
+        proofKey.addProperty("crv", "P-256");
+        proofKey.addProperty("alg", "ES256");
+        proofKey.addProperty("use", "sig");
+        proofKey.addProperty("kty", "EC");
+        proofKey.addProperty("x", this.getProofKeyX(publicKey));
+        proofKey.addProperty("y", this.getProofKeyY(publicKey));
 
         URL url = new URL(this.xboxTitleAuthURL);
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
@@ -152,36 +153,36 @@ public class Xbox {
         this.writeJsonObjectToPost(connection, jsonObject);
 
         String responce = FileManager.getFileContents(connection.getInputStream());
-        JSONObject responceJsonObject = JSONObject.parseObject(responce);
+        JsonObject responceJsonObject = JsonParser.parseString(responce).getAsJsonObject();
 
-        return responceJsonObject.getString("Token");
+        return responceJsonObject.get("Token").getAsString();
     }
 
     public String getXstsToken(String userToken, String deviceToken, String titleToken, ECPublicKey publicKey, ECPrivateKey privateKey) throws Exception {
-        JSONObject jsonObject = new JSONObject();
+        JsonObject jsonObject = new JsonObject();
 
-        jsonObject.put("RelyingParty", "https://multiplayer.minecraft.net/");
-        jsonObject.put("TokenType", "JWT");
+        jsonObject.addProperty("RelyingParty", "https://multiplayer.minecraft.net/");
+        jsonObject.addProperty("TokenType", "JWT");
 
-        JSONObject properties = new JSONObject();
-        jsonObject.put("Properties", properties);
+        JsonObject properties = new JsonObject();
+        jsonObject.addProperty("Properties", properties);
 
-        JSONArray userTokens = new JSONArray();
+        JsonArray userTokens = new JsonArray();
         userTokens.add(userToken);
 
-        properties.put("DeviceToken", deviceToken);
-        properties.put("TitleToken", titleToken);
-        properties.put("UserTokens", userTokens);
-        properties.put("SandboxId", "RETAIL");
+        properties.addProperty("DeviceToken", deviceToken);
+        properties.addProperty("TitleToken", titleToken);
+        properties.addProperty("UserTokens", userTokens);
+        properties.addProperty("SandboxId", "RETAIL");
 
-        JSONObject proofKey = new JSONObject();
-        properties.put("ProofKey", proofKey);
-        proofKey.put("crv", "P-256");
-        proofKey.put("alg", "ES256");
-        proofKey.put("use", "sig");
-        proofKey.put("kty", "EC");
-        proofKey.put("x", this.getProofKeyX(publicKey));
-        proofKey.put("y", this.getProofKeyY(publicKey));
+        JsonObject proofKey = new JsonObject();
+        properties.addProperty("ProofKey", proofKey);
+        proofKey.addProperty("crv", "P-256");
+        proofKey.addProperty("alg", "ES256");
+        proofKey.addProperty("use", "sig");
+        proofKey.addProperty("kty", "EC");
+        proofKey.addProperty("x", this.getProofKeyX(publicKey));
+        proofKey.addProperty("y", this.getProofKeyY(publicKey));
 
         URL url = new URL(this.xboxAuthorizeURL);
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
@@ -197,23 +198,23 @@ public class Xbox {
     }
 
     public String getXBLToken(String accessToken, ECPublicKey publicKey, ECPrivateKey privateKey, String deviceToken) throws Exception {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("AccessToken", "t=" + accessToken);
-        jsonObject.put("AppId", "00000000441cc96b");
-        jsonObject.put("deviceToken", deviceToken);
-        jsonObject.put("Sandbox", "RETAIL");
-        jsonObject.put("UseModernGamertag", true);
-        jsonObject.put("SiteName", "user.auth.xboxlive.com");
-        jsonObject.put("RelyingParty", "https://multiplayer.minecraft.net/");
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("AccessToken", "t=" + accessToken);
+        jsonObject.addProperty("AppId", "00000000441cc96b");
+        jsonObject.addProperty("deviceToken", deviceToken);
+        jsonObject.addProperty("Sandbox", "RETAIL");
+        jsonObject.addProperty("UseModernGamertag", true);
+        jsonObject.addProperty("SiteName", "user.auth.xboxlive.com");
+        jsonObject.addProperty("RelyingParty", "https://multiplayer.minecraft.net/");
 
-        JSONObject proofKey = new JSONObject();
-        jsonObject.put("ProofKey", proofKey);
-        proofKey.put("crv", "P-256");
-        proofKey.put("alg", "ES256");
-        proofKey.put("use", "sig");
-        proofKey.put("kty", "EC");
-        proofKey.put("x", this.getProofKeyX(publicKey));
-        proofKey.put("y", this.getProofKeyY(publicKey));
+        JsonObject proofKey = new JsonObject();
+        jsonObject.addProperty("ProofKey", proofKey);
+        proofKey.addProperty("crv", "P-256");
+        proofKey.addProperty("alg", "ES256");
+        proofKey.addProperty("use", "sig");
+        proofKey.addProperty("kty", "EC");
+        proofKey.addProperty("x", this.getProofKeyX(publicKey));
+        proofKey.addProperty("y", this.getProofKeyY(publicKey));
 
         URL url = new URL(this.xboxSisuURL);
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
@@ -226,25 +227,25 @@ public class Xbox {
         this.writeJsonObjectToPost(connection, jsonObject);
 
         String response = FileManager.getFileContents(connection.getInputStream());
-        JSONObject responseJsonObject = JSONObject.parseObject(response);
+        JsonObject responseJsonObject = JsonParser.parseString(response).getAsJsonObject();
 
-        return responseJsonObject.getJSONObject("AuthorizationToken").toString();
+        return responseJsonObject.get("AuthorizationToken").getAsJsonObject().toString();
     }
 
     public String requestMinecraftChain(String xsts, ECPublicKey publicKey) throws Exception {
-        JSONObject xstsObject = JSONObject.parseObject(xsts);
+        JsonObject xstsObject = JsonParser.parseString(xsts).getAsJsonObject();
 
         String pubKeyData = Base64.getEncoder().encodeToString(publicKey.getEncoded());
 
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("identityPublicKey", pubKeyData);
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("identityPublicKey", pubKeyData);
 
         URL url = new URL(this.minecraftAuthURL);
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
         connection.setRequestMethod("POST");
         connection.setRequestProperty("Content-Type", "application/json");
-        connection.setRequestProperty("Authorization", "XBL3.0 x=" + xstsObject.getJSONObject("DisplayClaims").getJSONArray("xui").getJSONObject(0).getString("uhs") + ";" + xstsObject.getString("Token"));
+        connection.setRequestProperty("Authorization", "XBL3.0 x=" + xstsObject.get("DisplayClaims").getAsJsonObject().get("xui").getAsJsonArray().get(0).getAsJsonObject().get("uhs").getAsString() + ";" + xstsObject.get("Token").getAsString());
         connection.setRequestProperty("User-Agent", "MCPE/UWP");
         connection.setRequestProperty("Client-Version", ProxyServer.getInstance().getBedrockPacketCodec().getMinecraftVersion());
 
@@ -253,7 +254,7 @@ public class Xbox {
         return FileManager.getFileContents(connection.getInputStream());
     }
 
-    private void writeJsonObjectToPost(HttpsURLConnection connection, JSONObject jsonObject) throws Exception {
+    private void writeJsonObjectToPost(HttpsURLConnection connection, JsonObject jsonObject) throws Exception {
         connection.setDoOutput(true);
 
         DataOutputStream dataOutputStream = new DataOutputStream(connection.getOutputStream());
@@ -269,7 +270,7 @@ public class Xbox {
         return Base64.getUrlEncoder().withoutPadding().encodeToString(Xbox.bigIntegerToByteArray(ecPublicKey.getW().getAffineY()));
     }
 
-    private void addSignatureHeader(HttpsURLConnection httpsURLConnection, JSONObject postData, ECPrivateKey privateKey) throws Exception {
+    private void addSignatureHeader(HttpsURLConnection httpsURLConnection, JsonObject postData, ECPrivateKey privateKey) throws Exception {
         long currentTime = this.windowsTimestamp();
         ByteArrayOutputStream bytesToSign = new ByteArrayOutputStream();
 

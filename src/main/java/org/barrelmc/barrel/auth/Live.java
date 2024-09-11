@@ -1,7 +1,7 @@
 package org.barrelmc.barrel.auth;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.github.steveice10.mc.protocol.packet.ingame.clientbound.ClientboundSystemChatPacket;
 import com.github.steveice10.packetlib.Session;
 import net.kyori.adventure.text.Component;
@@ -26,23 +26,23 @@ public class Live {
     public Timer requestLiveToken(Session session, String username) throws Exception {
         this.logger = ProxyServer.getInstance().getLogger();
         Logger Log = this.logger;
-        JSONObject d = AuthManager.getInstance().getXboxLive().startDeviceAuth();
+        JsonObject d = AuthManager.getInstance().getXboxLive().startDeviceAuth();
 
-        Component linkComponent = Component.text(d.getString("verification_uri"))
-                .clickEvent(ClickEvent.openUrl(d.getString("verification_uri")))
+        Component linkComponent = Component.text(d.get("verification_uri").getAsString())
+                .clickEvent(ClickEvent.openUrl(d.get("verification_uri").getAsString()))
                 .color(NamedTextColor.GREEN)
                 .decorate(TextDecoration.UNDERLINED);
 
-        Component codeComponent = Component.text(d.getString("user_code"))
+        Component codeComponent = Component.text(d.get("user_code").getAsString())
                 .color(NamedTextColor.GREEN)
                 .hoverEvent(Component.text("Click to copy code to clipboard."))
-                .clickEvent(ClickEvent.copyToClipboard(d.getString("user_code")));
+                .clickEvent(ClickEvent.copyToClipboard(d.get("user_code").getAsString()));
 
         TextComponent textComponent = Component.text()
                 .append(Component.text("§eAuthenticate at ").append(linkComponent))
                 .append(Component.text(" §eusing the code ").append(codeComponent))
                 .append(Component.text(". §eThis code will expire in ")
-                        .append(Component.text(d.getString("expires_in") + " seconds.")))
+                        .append(Component.text(d.get("expires_in").getAsString() + " seconds.")))
                 .build();
         session.send(new ClientboundSystemChatPacket(textComponent, false));
 
@@ -52,14 +52,14 @@ public class Live {
             @Override
             public void run() {
                 try {
-                    JSONObject r = AuthManager.getInstance().getXboxLive().pollDeviceAuth(d.getString("device_code"));
+                    JsonObject r = AuthManager.getInstance().getXboxLive().pollDeviceAuth(d.get("device_code").getAsString());
 
-                    if (r.containsKey("error")) {
-                        Log.error(r.getString("error_description"));
+                    if (r.has("error")) {
+                        Log.error(r.get("error_description").getAsString());
                         return;
                     }
 
-                    AuthManager.getInstance().getAccessTokens().put(username, r.getString("access_token"));
+                    AuthManager.getInstance().getAccessTokens().put(username, r.get("access_token").getAsString());
                     AuthManager.getInstance().getLoginPlayers().put(username, true);
 
                     AuthManager.getInstance().getTimers().remove(username);
@@ -71,12 +71,12 @@ public class Live {
                 } catch (Exception ignored) {
                 }
             }
-        }, 0, d.getLong("interval") * 1000);
+        }, 0, d.get("interval").getAsLong() * 1000);
 
         return timer;
     }
 
-    public JSONObject startDeviceAuth() throws Exception {
+    public JsonObject startDeviceAuth() throws Exception {
         HttpClient httpClient = HttpClient.newBuilder().build();
 
         String requestBody = "client_id=00000000441cc96b&scope=service::user.auth.xboxlive.com::MBI_SSL&response_type=device_code";
@@ -94,11 +94,10 @@ public class Live {
         if (statusCode != 200) {
             throw new Exception("Failed to start device auth");
         }
-
-        return JSON.parseObject(response.body());
+        return JsonParser.parseString(response.body()).getAsJsonObject();
     }
 
-    public JSONObject pollDeviceAuth(String deviceCode) throws Exception {
+    public JsonObject pollDeviceAuth(String deviceCode) throws Exception {
         HttpClient client = HttpClient.newBuilder().build();
 
         String requestBody = "client_id=00000000441cc96b&grant_type=urn:ietf:params:oauth:grant-type:device_code&device_code=" + deviceCode;
@@ -114,15 +113,15 @@ public class Live {
             throw new Exception(response.body());
         }
 
-        JSONObject json = JSON.parseObject(response.body());
-        if (json.containsKey("error")) {
-            if (json.getString("error").equals("authorization_pending")) {
+        JsonObject json = JsonParser.parseString(response.body()).getAsJsonObject();
+        if (json.has("error")) {
+            if (json.get("error").getAsString().equals("authorization_pending")) {
                 return null;
             } else {
-                throw new Exception("non-empty unknown poll error: " + json.getString("error"));
+                throw new Exception("non-empty unknown poll error: " + json.get("error").getAsString());
             }
         } else {
-            return JSON.parseObject(response.body());
+            return JsonParser.parseString(response.body()).getAsJsonObject();
         }
     }
 }

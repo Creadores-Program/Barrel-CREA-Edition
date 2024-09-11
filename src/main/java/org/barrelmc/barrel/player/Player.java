@@ -5,8 +5,10 @@
 
 package org.barrelmc.barrel.player;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonElement;
 import com.github.steveice10.mc.protocol.data.game.entity.object.Direction;
 import com.github.steveice10.mc.protocol.packet.ingame.clientbound.ClientboundSystemChatPacket;
 import com.github.steveice10.mc.protocol.packet.ingame.clientbound.level.ClientboundSetChunkCacheCenterPacket;
@@ -223,45 +225,47 @@ public class Player extends Vector3 {
         this.privateKey = (ECPrivateKey) ecdsa384KeyPair.getPrivate();
 
         String chainData = xbox.requestMinecraftChain(xsts, this.publicKey);
-        JSONObject chainDataObject = JSONObject.parseObject(chainData);
-        JSONArray minecraftNetChain = chainDataObject.getJSONArray("chain");
-        String firstChainHeader = minecraftNetChain.getString(0);
+        JsonObject chainDataObject = JsonParser.parseString(chainData).getAsJsonObject();
+        JsonArray minecraftNetChain = chainDataObject.get("chain").getAsJsonArray();
+        String firstChainHeader = minecraftNetChain.get(0).getAsString();
         firstChainHeader = firstChainHeader.split("\\.")[0];
         firstChainHeader = new String(Base64.getDecoder().decode(firstChainHeader.getBytes()));
-        String firstKeyx5u = JSONObject.parseObject(firstChainHeader).getString("x5u");
+        String firstKeyx5u = JsonParser.parseString(firstChainHeader).getAsJsonObject().get("x5u").getAsString();
 
-        JSONObject newFirstChain = new JSONObject();
-        newFirstChain.put("certificateAuthority", true);
-        newFirstChain.put("exp", Instant.now().getEpochSecond() + TimeUnit.HOURS.toSeconds(6));
-        newFirstChain.put("identityPublicKey", firstKeyx5u);
-        newFirstChain.put("nbf", Instant.now().getEpochSecond() - TimeUnit.HOURS.toSeconds(6));
+        JsonObject newFirstChain = new JsonObject();
+        newFirstChain.addProperty("certificateAuthority", true);
+        newFirstChain.addProperty("exp", Instant.now().getEpochSecond() + TimeUnit.HOURS.toSeconds(6));
+        newFirstChain.addProperty("identityPublicKey", firstKeyx5u);
+        newFirstChain.addProperty("nbf", Instant.now().getEpochSecond() - TimeUnit.HOURS.toSeconds(6));
 
         {
             String publicKeyBase64 = Base64.getEncoder().encodeToString(this.publicKey.getEncoded());
-            JSONObject jwtHeader = new JSONObject();
-            jwtHeader.put("alg", "ES384");
-            jwtHeader.put("x5u", publicKeyBase64);
+            JsonObject jwtHeader = new JsonObject();
+            jwtHeader.addProperty("alg", "ES384");
+            jwtHeader.addProperty("x5u", publicKeyBase64);
 
             String jwt = generateJwt(jwtHeader, newFirstChain);
 
-            JSONArray jsonArray = new JSONArray();
+            JsonArray jsonArray = new JsonArray();
             jsonArray.add(jwt);
-            jsonArray.addAll(minecraftNetChain);
-            for (Object o : jsonArray) {
-                loginPacket.getChain().add((String) o);
+            for(int i = 0; i < minecraftNetChain.size(); i++){
+                jsonArray.add(minecraftNetChain.get(i));
+            }
+            for (JsonElement o : jsonArray) {
+                loginPacket.getChain().add(o.getAsString());
             }
         }
         {
-            String lastChain = minecraftNetChain.getString(minecraftNetChain.size() - 1);
+            String lastChain = minecraftNetChain.get(minecraftNetChain.size() - 1).getAsString();
             String lastChainPayload = lastChain.split("\\.")[1];
             lastChainPayload = new String(Base64.getDecoder().decode(lastChainPayload.getBytes()));
 
-            JSONObject payloadObject = JSONObject.parseObject(lastChainPayload);
-            JSONObject extraData = payloadObject.getJSONObject("extraData");
+            JsonObject payloadObject = JsonParser.parseString(lastChainPayload).getAsJsonObject();
+            JsonObject extraData = payloadObject.get("extraData").getAsJsonObject();
 
-            this.username = extraData.getString("displayName");
-            this.xuid = extraData.getString("XUID");
-            this.UUID = extraData.getString("identity");
+            this.username = extraData.get("displayName").getAsString();
+            this.xuid = extraData.get("XUID").getAsString();
+            this.UUID = extraData.get("identity").getAsString();
         }
 
         loginPacket.setExtra(this.getSkinData());
@@ -312,28 +316,28 @@ public class Player extends Vector3 {
 
         String publicKeyBase64 = Base64.getEncoder().encodeToString(this.publicKey.getEncoded());
 
-        JSONObject chain = new JSONObject();
-        chain.put("exp", Instant.now().getEpochSecond() + TimeUnit.HOURS.toSeconds(6));
-        chain.put("identityPublicKey", publicKeyBase64);
-        chain.put("nbf", Instant.now().getEpochSecond() - TimeUnit.HOURS.toSeconds(6));
+        JsonObject chain = new JsonObject();
+        chain.addProperty("exp", Instant.now().getEpochSecond() + TimeUnit.HOURS.toSeconds(6));
+        chain.addProperty("identityPublicKey", publicKeyBase64);
+        chain.addProperty("nbf", Instant.now().getEpochSecond() - TimeUnit.HOURS.toSeconds(6));
 
-        JSONObject extraData = new JSONObject();
-        extraData.put("identity", this.UUID);
-        extraData.put("XUID", this.xuid);
-        extraData.put("displayName", this.username);
-        chain.put("extraData", extraData);
+        JsonObject extraData = new JsonObject();
+        extraData.addProperty("identity", this.UUID);
+        extraData.addProperty("XUID", this.xuid);
+        extraData.addProperty("displayName", this.username);
+        chain.addProperty("extraData", extraData);
 
-        JSONObject jwtHeader = new JSONObject();
-        jwtHeader.put("alg", "ES384");
-        jwtHeader.put("x5u", publicKeyBase64);
+        JsonObject jwtHeader = new JsonObject();
+        jwtHeader.addProperty("alg", "ES384");
+        jwtHeader.addProperty("x5u", publicKeyBase64);
 
         String jwt = generateJwt(jwtHeader, chain);
 
-        JSONArray chainDataJsonArray = new JSONArray();
+        JsonArray chainDataJsonArray = new JsonArray();
         chainDataJsonArray.add(jwt);
 
-        for (Object o : chainDataJsonArray) {
-            loginPacket.getChain().add((String) o);
+        for (JsonElement o : chainDataJsonArray) {
+            loginPacket.getChain().add(o.getAsString());
         }
 
         loginPacket.setExtra(this.getSkinData());
@@ -344,58 +348,58 @@ public class Player extends Vector3 {
     private String getSkinData() {
         String publicKeyBase64 = Base64.getEncoder().encodeToString(this.publicKey.getEncoded());
 
-        JSONObject jwtHeader = new JSONObject();
-        jwtHeader.put("alg", "ES384");
-        jwtHeader.put("x5u", publicKeyBase64);
+        JsonObject jwtHeader = new JsonObject();
+        jwtHeader.addProperty("alg", "ES384");
+        jwtHeader.addProperty("x5u", publicKeyBase64);
 
-        JSONObject skinData = new JSONObject();
+        JsonObject skinData = new JsonObject();
 
-        skinData.put("AnimatedImageData", new JSONArray());
-        skinData.put("ArmSize", "");
-        skinData.put("CapeData", "");
-        skinData.put("CapeId", "");
-        skinData.put("PlayFabId", java.util.UUID.randomUUID().toString());
-        skinData.put("CapeImageHeight", 0);
-        skinData.put("CapeImageWidth", 0);
-        skinData.put("CapeOnClassicSkin", false);
-        skinData.put("ClientRandomId", new Random().nextLong());
-        skinData.put("CompatibleWithClientSideChunkGen", false);
-        skinData.put("CurrentInputMode", 1);
-        skinData.put("DefaultInputMode", 1);
-        skinData.put("DeviceId", java.util.UUID.randomUUID().toString());
-        skinData.put("DeviceModel", "Barrel CREA Edition");
-        skinData.put("DeviceOS", 7);
-        skinData.put("GameVersion", ProxyServer.getInstance().getBedrockPacketCodec().getMinecraftVersion());
-        skinData.put("GuiScale", 0);
-        skinData.put("LanguageCode", this.language);
-        skinData.put("PersonaPieces", new JSONArray());
-        skinData.put("PersonaSkin", false);
-        skinData.put("PieceTintColors", new JSONArray());
-        skinData.put("PlatformOfflineId", "");
-        skinData.put("PlatformOnlineId", "");
-        skinData.put("PremiumSkin", false);
-        skinData.put("SelfSignedId", this.UUID);
-        skinData.put("ServerAddress", ProxyServer.getInstance().getConfig().getBedrockAddress() + ":" + ProxyServer.getInstance().getConfig().getBedrockPort());
-        skinData.put("SkinAnimationData", "");
-        skinData.put("SkinColor", "#0");
-        skinData.put("SkinData", ProxyServer.getInstance().getDefaultSkinData());
-        skinData.put("SkinGeometryData", Base64.getEncoder().encodeToString(ProxyServer.getInstance().getDefaultSkinGeometry().getBytes()));
-        skinData.put("SkinId", this.UUID + ".Custom");
-        skinData.put("SkinImageHeight", 64);
-        skinData.put("SkinImageWidth", 64);
-        skinData.put("SkinResourcePatch", "ewogICAiZ2VvbWV0cnkiIDogewogICAgICAiZGVmYXVsdCIgOiAiZ2VvbWV0cnkuaHVtYW5vaWQuY3VzdG9tIgogICB9Cn0K");
-        skinData.put("ThirdPartyName", this.username);
-        skinData.put("ThirdPartyNameOnly", false);
-        skinData.put("UIProfile", 0);
-        skinData.put("IsEditorMode", 0);
-        skinData.put("TrustedSkin", 1);
-        skinData.put("SkinGeometryDataEngineVersion", Base64.getEncoder().encodeToString(ProxyServer.getInstance().getBedrockPacketCodec().getMinecraftVersion().getBytes()));
-        skinData.put("OverrideSkin", false);
+        skinData.addProperty("AnimatedImageData", new JsonArray());
+        skinData.addProperty("ArmSize", "");
+        skinData.addProperty("CapeData", "");
+        skinData.addProperty("CapeId", "");
+        skinData.addProperty("PlayFabId", java.util.UUID.randomUUID().toString());
+        skinData.addProperty("CapeImageHeight", 0);
+        skinData.addProperty("CapeImageWidth", 0);
+        skinData.addProperty("CapeOnClassicSkin", false);
+        skinData.addProperty("ClientRandomId", new Random().nextLong());
+        skinData.addProperty("CompatibleWithClientSideChunkGen", false);
+        skinData.addProperty("CurrentInputMode", 1);
+        skinData.addProperty("DefaultInputMode", 1);
+        skinData.addProperty("DeviceId", java.util.UUID.randomUUID().toString());
+        skinData.addProperty("DeviceModel", "Barrel CREA Edition");
+        skinData.addProperty("DeviceOS", 7);
+        skinData.addProperty("GameVersion", ProxyServer.getInstance().getBedrockPacketCodec().getMinecraftVersion());
+        skinData.addProperty("GuiScale", 0);
+        skinData.addProperty("LanguageCode", this.language);
+        skinData.addProperty("PersonaPieces", new JsonArray());
+        skinData.addProperty("PersonaSkin", false);
+        skinData.addProperty("PieceTintColors", new JsonArray());
+        skinData.addProperty("PlatformOfflineId", "");
+        skinData.addProperty("PlatformOnlineId", "");
+        skinData.addProperty("PremiumSkin", false);
+        skinData.addProperty("SelfSignedId", this.UUID);
+        skinData.addProperty("ServerAddress", ProxyServer.getInstance().getConfig().getBedrockAddress() + ":" + ProxyServer.getInstance().getConfig().getBedrockPort());
+        skinData.addProperty("SkinAnimationData", "");
+        skinData.addProperty("SkinColor", "#0");
+        skinData.addProperty("SkinData", ProxyServer.getInstance().getDefaultSkinData());
+        skinData.addProperty("SkinGeometryData", Base64.getEncoder().encodeToString(ProxyServer.getInstance().getDefaultSkinGeometry().getBytes()));
+        skinData.addProperty("SkinId", this.UUID + ".Custom");
+        skinData.addProperty("SkinImageHeight", 64);
+        skinData.addProperty("SkinImageWidth", 64);
+        skinData.addProperty("SkinResourcePatch", "ewogICAiZ2VvbWV0cnkiIDogewogICAgICAiZGVmYXVsdCIgOiAiZ2VvbWV0cnkuaHVtYW5vaWQuY3VzdG9tIgogICB9Cn0K");
+        skinData.addProperty("ThirdPartyName", this.username);
+        skinData.addProperty("ThirdPartyNameOnly", false);
+        skinData.addProperty("UIProfile", 0);
+        skinData.addProperty("IsEditorMode", 0);
+        skinData.addProperty("TrustedSkin", 1);
+        skinData.addProperty("SkinGeometryDataEngineVersion", Base64.getEncoder().encodeToString(ProxyServer.getInstance().getBedrockPacketCodec().getMinecraftVersion().getBytes()));
+        skinData.addProperty("OverrideSkin", false);
 
         return generateJwt(jwtHeader, skinData);
     }
 
-    private String generateJwt(JSONObject jwtHeader, JSONObject chain) {
+    private String generateJwt(JsonObject jwtHeader, JsonObject chain) {
         String header = Base64.getUrlEncoder().withoutPadding().encodeToString(jwtHeader.toJSONString().getBytes());
         String payload = Base64.getUrlEncoder().withoutPadding().encodeToString(chain.toJSONString().getBytes());
 
