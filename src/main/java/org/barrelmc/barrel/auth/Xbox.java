@@ -1,7 +1,7 @@
 package org.barrelmc.barrel.auth;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONArray;
+import com.alibaba.fastjson2.JSONObject;
 import org.barrelmc.barrel.server.ProxyServer;
 import org.barrelmc.barrel.utils.FileManager;
 import org.barrelmc.barrel.utils.Utils;
